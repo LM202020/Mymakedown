@@ -671,35 +671,6 @@ Trivial surgical fixes may use a shorter path only when they do not affect archi
 
 ## Handoff Size Control and Compaction
 
-Session and agent handoff files must not grow without bound.
+Handoff files must not grow without bound. The size limits, the content that must be externalized, and the compaction triggers are defined once in `docs/HANDOFF_POLICY.md` (enforced by `optional-hooks/config/hooks-config.yaml`).
 
-Rules:
-
-1. `docs/SESSION_HANDOFF.md` is the current state file, not a history log.
-2. `docs/SESSION_HANDOFF.md` must be overwritten with the latest compact state, not appended forever.
-3. Historical handoffs go to `docs/handoffs/*.md`.
-4. Every handoff snapshot must be indexed in `docs/HANDOFF_INDEX.md`.
-5. Large logs, diffs, CI outputs, and traceback dumps must go to `docs/handoffs/artifacts/`, not into handoff markdown.
-6. Durable decisions must move to `docs/DECISIONS.md`.
-7. Durable risks must move to `docs/RISK_REGISTER.md`.
-8. Completed task details must live in the active plan, reviews, or retros, not in the current handoff.
-
-Size targets:
-
-| File | Target | Maximum |
-|---|---:|---:|
-| `docs/SESSION_HANDOFF.md` | 100 - 200 lines | 300 lines |
-| `docs/handoffs/*.md` | 80 - 150 lines | 250 lines |
-| `docs/HANDOFF_INDEX.md` | active recent entries | archive after 200 rows |
-
-Compaction is required when:
-
-- `SESSION_HANDOFF.md` exceeds 300 lines
-- a handoff snapshot exceeds 250 lines
-- long logs or diffs are pasted into handoff files
-- completed old tasks are repeatedly summarized in full
-- the next agent would need to read excessive history before continuing
-
-When compaction is required, perform Handoff Compaction before continuing implementation.
-
-Use `docs/HANDOFF_POLICY.md` for the detailed policy.
+Run Handoff Compaction whenever `docs/HANDOFF_POLICY.md` requires it. Do not restate the limits here.

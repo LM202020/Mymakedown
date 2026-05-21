@@ -241,12 +241,11 @@ Review full diff against base branch。
 要求：
 
 1. 读取 docs/HANDOFF_POLICY.md、docs/SESSION_HANDOFF.md、docs/HANDOFF_INDEX.md 和 active plan。
-2. 检查 SESSION_HANDOFF 是否超过 300 行。
+2. 按 docs/HANDOFF_POLICY.md §2 的大小限制，检查 SESSION_HANDOFF、各快照、Commands Run 是否超限。
 3. 检查是否粘贴了长日志、长 diff、长 traceback、完整 spec、完整 plan。
 4. 检查 Completed Work 是否重复展开旧 task。
-5. 检查 Commands Run 是否超过 10 条。
-6. 如果膨胀，请执行 Handoff Compaction。
-7. 不要修改业务代码。
+5. 如果膨胀，请执行 Handoff Compaction。
+6. 不要修改业务代码。
 ```
 
 ---
@@ -264,7 +263,7 @@ Review full diff against base branch。
 4. 更新 active plan task status。
 5. 不要粘贴完整日志、完整 diff、完整 spec、完整 plan。
 6. 大输出只保存到 docs/handoffs/artifacts/ 并在 handoff 中引用路径。
-7. SESSION_HANDOFF 保持在 100-200 行，最多 300 行。
+7. SESSION_HANDOFF 保持精简，大小限制以 docs/HANDOFF_POLICY.md 为准。
 8. 完成后不要继续写代码。
 ```
 

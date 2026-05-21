@@ -10,8 +10,7 @@ Session save does not happen automatically. The active agent must update this fi
 
 Size rule:
 
-- Target: 100 - 200 lines.
-- Maximum: 300 lines.
+- Keep this file lean; size limits are defined in `docs/HANDOFF_POLICY.md` and enforced by the optional hooks.
 - This file must be overwritten with current state, not appended forever.
 - Historical entries belong in `docs/HANDOFF_INDEX.md` and `docs/handoffs/*.md`.
 - Large logs belong in `docs/handoffs/artifacts/`.

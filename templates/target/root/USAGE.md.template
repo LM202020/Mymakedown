@@ -446,11 +446,7 @@ docs/handoffs/archive/
 
 ### 12.1 硬性限制
 
-| 文件 | 目标长度 | 最大长度 |
-|---|---:|---:|
-| `docs/SESSION_HANDOFF.md` | 100 - 200 行 | 300 行 |
-| `docs/handoffs/*.md` | 80 - 150 行 | 250 行 |
-| `docs/HANDOFF_INDEX.md` | 最近记录 | 超过 200 行按月归档 |
+交接文件的目标/最大长度和超限动作统一定义在 `docs/HANDOFF_POLICY.md` §2，机器侧由 `optional-hooks/config/hooks-config.yaml` 强制执行。以那里为准，此处不再复述数字。
 
 ### 12.2 保存 Session 时的推荐说法
 
@@ -465,7 +461,7 @@ docs/handoffs/archive/
 4. 更新 active plan task status。
 5. 不要粘贴完整日志、完整 diff、完整 spec、完整 plan。
 6. 大输出只保存到 docs/handoffs/artifacts/ 并在 handoff 中引用路径。
-7. SESSION_HANDOFF 保持在 100-200 行，最多 300 行。
+7. SESSION_HANDOFF 保持精简，大小限制以 docs/HANDOFF_POLICY.md 为准。
 8. 完成后不要继续写代码。
 ```
 

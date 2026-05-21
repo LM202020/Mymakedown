@@ -14,8 +14,7 @@ Example:
 
 Size rule:
 
-- Target: 80 - 150 lines.
-- Maximum: 250 lines.
+- Keep snapshots small; size limits are defined in `docs/HANDOFF_POLICY.md` and enforced by the optional hooks.
 - Do not paste full logs, full diffs, full spec, full plan, or long tracebacks.
 - Put large outputs in `docs/handoffs/artifacts/` and reference the path.
 - Add one row to `docs/HANDOFF_INDEX.md`.
