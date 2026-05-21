@@ -79,19 +79,49 @@ Record the conflict in `docs/DOC_CONFLICTS.md` or `docs/DOC_MIGRATION_MAP.md`.
 
 ## 3. Change Classification Gate
 
-Before planning or implementation, classify the request.
+Before planning or implementation, classify the request, then pick a lane (section 3.1).
 
-| Level | Meaning | Examples | Required Path |
+| Level | Meaning | Examples | Lane |
 |---|---|---|---|
-| P0 Trivial | No behavior change | typo, broken doc link, formatting-only doc edit | Trivial Fix Exception |
-| P1 Surgical | Narrow, low-risk fix | single-file bug fix, small test correction | short plan + focused verification |
-| P2 Standard | Feature or behavior change | new API behavior, new UI behavior, cross-module change | full workflow |
-| P3 High Risk | Sensitive or production-impacting | credentials, deployment, database migration, permissions, money movement, destructive operations | full workflow + explicit approval |
+| P0 Trivial | No behavior change | typo, broken doc link, formatting-only doc edit | Trivial Fix Exception (section 23) |
+| P1 Surgical | Narrow, low-risk fix | single-file bug fix, small test correction | Light Lane |
+| P2 Standard | Feature or behavior change | new API behavior, new UI behavior, cross-module change | Full Lane |
+| P3 High Risk | Sensitive or production-impacting | credentials, deployment, database migration, permissions, money movement, destructive operations | Full Lane + explicit approval |
 
 If uncertain, classify upward.
 
 ---
 
+## 3.1 Change Lanes
+
+The same gates do not apply to every change. Pick a lane by classification. A solo developer uses
+the Light Lane for small changes and the Full Lane for large or risky ones; both are first-class.
+
+### Light Lane (P1 Surgical)
+
+For a small, low-risk change, usually one session and a few files. Keep these gates, drop the rest:
+
+1. Write a short combined note instead of separate spec + plan: goal, approach, files to touch,
+   files not to touch, and the verification command. Inline, or a brief file under `docs/plans/`.
+2. Skip the separate Spec Review and Plan Review gates; do one self-check that the note is concrete
+   (no unresolved `UNKNOWN`, no vague steps).
+3. Branch as usual; a dedicated worktree is optional.
+4. When behavior changes, write the focused test first; otherwise define the focused verification
+   command up front.
+5. Implement the minimum within the named files only.
+6. Run the focused verification.
+7. Do one self-review pass: code quality, test adequacy, risk. Then commit.
+8. Create a handoff only if you stop mid-change.
+
+Promote to the Full Lane the moment the change grows: it spans multiple modules, needs more than a
+handful of files, reveals an architecture decision, or touches any P3 risk area.
+
+### Full Lane (P2 Standard / P3 High Risk)
+
+Use the complete workflow in sections 8 through 22: Spec Review, full implementation plan, Plan
+Review, branch/worktree, file ownership, task-by-task execution, review gates, and final
+integration. P3 changes additionally require explicit approval at the Risk Gates (section 10 of the
+plan template) before any code is written.
 
 ---
 
