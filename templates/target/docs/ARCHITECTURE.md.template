@@ -1,0 +1,45 @@
+# Architecture
+
+## 1. Overview
+
+`UNKNOWN`
+
+## 2. System Diagram
+
+`UNKNOWN`
+
+## 3. Main Components
+
+| Component | Responsibility | Files / Directories |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 4. Data Flow
+
+`UNKNOWN`
+
+## 5. Control Flow
+
+`UNKNOWN`
+
+## 6. Interfaces
+
+| Interface | Producer | Consumer | Notes |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 7. Compatibility Constraints
+
+`UNKNOWN`
+
+## 8. Rollout / Migration Notes
+
+`UNKNOWN`
+
+## 9. Rollback Strategy
+
+`UNKNOWN`
+
+## 10. Architecture Decisions
+
+Durable decisions must also be recorded in `docs/DECISIONS.md`.

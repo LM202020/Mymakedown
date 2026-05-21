@@ -1,0 +1,58 @@
+# Document Migration Map
+
+This file maps existing project documentation to canonical workflow documents.
+
+Use this during Existing Project Adoption Mode.
+
+## 1. Canonical Documents
+
+| Canonical Document | Status | Source Documents | Notes |
+|---|---|---|---|
+| `docs/PROJECT_CONTEXT.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/ARCHITECTURE.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/API_PATHS.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/DB_CONVENTIONS.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/TEST_CONVENTIONS.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/DEPLOYMENT.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/SECURITY.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/RISK_REGISTER.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `docs/PROMPT_LIBRARY.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+Status values:
+
+- existing
+- created
+- missing
+- N/A
+- conflicting
+- needs review
+
+## 2. Existing Documents
+
+| Existing File | Classification | Canonical Mapping | Action |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+Classification values:
+
+- canonical
+- useful but incomplete
+- outdated
+- conflicting
+- archive candidate
+- unknown
+
+## 3. Mapping Rules
+
+- Do not delete old documents automatically.
+- Do not silently merge conflicting documents.
+- Do not invent missing facts.
+- Mark unknown facts as `UNKNOWN`.
+- Mark non-applicable areas as `N/A`.
+- Record conflicts in `docs/DOC_CONFLICTS.md`.
+
+## 4. Archive Candidates
+
+| File | Reason | Safe to Archive? | Required Approval |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |

@@ -1,0 +1,705 @@
+# Implementation Workflow
+
+This file is the canonical project-level workflow for agentic development.
+
+It prevents agents from implementing directly from a spec without an approved execution plan, and it defines how new projects, old projects, multi-agent execution, session save, session restore, and context compaction work.
+
+---
+
+## 0. Purpose
+
+For non-trivial changes, the required path is:
+
+1. Classify the requested change.
+2. Review and accept the spec.
+3. Convert the spec into an implementation plan.
+4. Review and accept the plan.
+5. Create a branch or clean worktree from the correct base.
+6. Execute task-by-task.
+7. Use subagents only when task boundaries are independent.
+8. Verify each task with tests and review gates.
+9. Complete final integration review, QA, PR, CI, merge, deploy, and retro as applicable.
+10. Save session handoff before stopping or switching agents.
+11. Restore from session handoff before continuing in a new session.
+
+---
+
+## 1. Project Fill-In
+
+Replace these placeholders when adopting this template:
+
+- Project name: `<PROJECT_NAME>`
+- Main branch: `<MAIN_BRANCH>`
+- Primary language / framework: `<STACK>`
+- Runtime version: `<RUNTIME_VERSION_OR_NA>`
+- Package manager: `<PACKAGE_MANAGER_OR_NA>`
+- Focused test command: `<FOCUSED_TEST_COMMAND>`
+- Full test command: `<FULL_TEST_COMMAND>`
+- Lint / typecheck command: `<QUALITY_COMMAND>`
+- Build command: `<BUILD_COMMAND>`
+- Local run command: `<RUN_COMMAND>`
+- CI provider: `<CI_PROVIDER_OR_NA>`
+- Deployment target: `<DEPLOY_TARGET_OR_NA>`
+- Rollback command: `<ROLLBACK_COMMAND_OR_NA>`
+- Canary / monitoring requirement: `<CANARY_OR_NA>`
+- Database: `<DATABASE_OR_NA>`
+- Migration command: `<MIGRATION_COMMAND_OR_NA>`
+- Secret storage: `<SECRET_STORAGE_OR_NA>`
+- Env file policy: `<ENV_POLICY>`
+- Logs location: `<LOGS_OR_NA>`
+- Observability: `<OBSERVABILITY_OR_NA>`
+- Frozen or canonical specs: `<SPEC_FILES_OR_NA>`
+- Security / data / production risk gates: `<RISK_GATES>`
+
+Unknown values must be marked `UNKNOWN`.
+
+Do not invent deployment, credentials, database, CI, production, or secret-management facts.
+
+---
+
+## 2. Document Authority Order
+
+When documents conflict, use this authority order:
+
+1. Direct user instruction in the current task.
+2. Approved active spec.
+3. Approved active implementation plan.
+4. `docs/DECISIONS.md`.
+5. `docs/IMPLEMENTATION_WORKFLOW.md`.
+6. Canonical project docs listed in `docs/DOCUMENT_INDEX.md`.
+7. Current code behavior verified by tests or inspection.
+8. Legacy documents.
+9. Unverified assumptions.
+
+If a lower-authority source conflicts with a higher-authority source, do not silently merge them.
+
+Record the conflict in `docs/DOC_CONFLICTS.md` or `docs/DOC_MIGRATION_MAP.md`.
+
+---
+
+## 3. Change Classification Gate
+
+Before planning or implementation, classify the request.
+
+| Level | Meaning | Examples | Required Path |
+|---|---|---|---|
+| P0 Trivial | No behavior change | typo, broken doc link, formatting-only doc edit | Trivial Fix Exception |
+| P1 Surgical | Narrow, low-risk fix | single-file bug fix, small test correction | short plan + focused verification |
+| P2 Standard | Feature or behavior change | new API behavior, new UI behavior, cross-module change | full workflow |
+| P3 High Risk | Sensitive or production-impacting | credentials, deployment, database migration, permissions, money movement, destructive operations | full workflow + explicit approval |
+
+If uncertain, classify upward.
+
+---
+
+
+---
+
+## Entry Point Merge Policy
+
+Root entry files must not be overwritten in existing projects.
+
+Protected entry files:
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `CODEX.md`
+- `README.md`
+
+Rules:
+
+1. In new projects, create these files from `templates/target/root/*.template` only if they do not already exist.
+2. In existing projects, read and preserve existing files.
+3. If a root entry file already exists, do not overwrite it.
+4. Append or update only the managed block between:
+
+```md
+<!-- BEGIN PROJECT_AGENT_WORKFLOW -->
+...
+<!-- END PROJECT_AGENT_WORKFLOW -->
+```
+
+5. If existing instructions conflict with the framework, do not silently resolve the conflict.
+6. Record conflicts in `docs/DOC_CONFLICTS.md`.
+7. Create or update `docs/adoption/ENTRYPOINT_MERGE_PLAN.md`.
+8. Follow `docs/ENTRYPOINT_MERGE_POLICY.md`.
+
+
+## 4. New Project Bootstrap Mode
+
+Use this mode when starting a new project from this framework.
+
+The agent must not implement product features during bootstrap.
+
+The agent must create or safely merge root entry files according to `docs/ENTRYPOINT_MERGE_POLICY.md`:
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `CODEX.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- `docs/PROMPT_LIBRARY.md`
+- `docs/PROJECT_CONTEXT.md`
+- `docs/DOCUMENT_INDEX.md`
+- `docs/ARCHITECTURE.md`
+- `docs/API_PATHS.md` or N/A marker
+- `docs/DB_CONVENTIONS.md` or N/A marker
+- `docs/TEST_CONVENTIONS.md`
+- `docs/DEPLOYMENT.md` or N/A marker
+- `docs/SECURITY.md`
+- `docs/RISK_REGISTER.md`
+- `docs/DECISIONS.md`
+- `docs/SESSION_HANDOFF.md`
+- `docs/HANDOFF_POLICY.md`
+- `docs/AGENT_ROSTER.md`
+- `docs/specs/`
+- `docs/plans/`
+- `docs/reviews/`
+- `docs/handoffs/`
+- `docs/retros/`
+- `docs/archive/`
+
+The agent must fill known project facts and mark unknown items explicitly.
+
+The agent must not invent deployment, credentials, database, CI, or production details.
+
+Bootstrap completion criteria:
+
+- required directories exist
+- root agent files exist
+- prompt library exists
+- document index exists
+- handoff file exists
+- unused sections are marked `N/A` or `UNKNOWN`
+- no business feature code has been added unless explicitly requested
+
+---
+
+## 5. Existing Project Adoption Mode
+
+Use this mode when applying the workflow to an existing project.
+
+The agent must not rewrite application code during adoption unless explicitly instructed.
+
+Adoption phases:
+
+1. Inventory existing files and documents.
+2. Identify authoritative docs, outdated docs, missing docs, and conflicting docs.
+3. Generate or update `docs/PROJECT_BASELINE.md`.
+4. Generate or update `docs/DOCUMENT_INDEX.md`.
+5. Generate or update `docs/DOC_MIGRATION_MAP.md`.
+6. Generate or update `docs/DOC_CONFLICTS.md` if conflicts exist.
+7. Create missing canonical docs with `UNKNOWN` and `N/A` markers.
+8. Safely merge `AGENTS.md`, `CLAUDE.md`, and `CODEX.md` according to `docs/ENTRYPOINT_MERGE_POLICY.md`; do not overwrite existing files.
+
+The agent must classify every discovered document as:
+
+- canonical
+- useful but incomplete
+- outdated
+- conflicting
+- archive candidate
+- unknown
+
+Old documents must not be deleted automatically.
+
+If old and new documents conflict, record the conflict and require human resolution before implementation.
+
+---
+
+## 6. Existing Project Optimization Mode
+
+Use this mode after Existing Project Adoption Mode.
+
+Before optimizing an existing project, read:
+
+- `docs/PROJECT_BASELINE.md`
+- `docs/DOCUMENT_INDEX.md`
+- `docs/DOC_MIGRATION_MAP.md`
+- `docs/RISK_REGISTER.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- relevant architecture, API, test, database, deployment, or security docs
+
+Optimization tasks must be classified as:
+
+- safe cleanup
+- test coverage improvement
+- documentation alignment
+- refactor
+- behavior change
+- architecture change
+- data or migration change
+- deployment change
+- security-sensitive change
+
+Deployment, credentials, production infrastructure, systemd, database migrations, and destructive operations require explicit approval.
+
+---
+
+## 7. Context Loading Policy
+
+Do not load all documentation by default.
+
+Use `docs/DOCUMENT_INDEX.md` to decide what to read.
+
+Always read:
+
+- `AGENTS.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- `docs/SESSION_HANDOFF.md`
+- `docs/HANDOFF_POLICY.md`
+
+For planning, read:
+
+- active spec
+- active implementation plan if one exists
+- `docs/PROJECT_CONTEXT.md`
+- `docs/RISK_REGISTER.md`
+- task-specific docs from `docs/DOCUMENT_INDEX.md`
+
+Record every source used in the active plan Source Map.
+
+---
+
+## 8. Spec Review Gate
+
+Before writing an implementation plan, review the spec and decide one of:
+
+- **Accepted**: clear enough to plan and execute.
+- **Accepted with explicit constraints**: implementation may proceed only under named assumptions.
+- **Rejected / needs revision**: return to spec review; do not guess in implementation.
+
+Spec review must check:
+
+- user goal and non-goals are explicit
+- requirements are testable
+- out-of-scope items are stated
+- security, data, migration, deployment, rollback implications are covered or marked N/A
+- ambiguities affecting architecture, data model, credentials, production behavior, user-facing behavior, or safety are resolved before implementation
+
+---
+
+## 9. Implementation Plan Requirements
+
+The plan must be detailed enough that another agent can execute it without hidden context.
+
+Required sections:
+
+1. Goal
+2. Source Map
+3. Architecture / Approach
+4. Requirement Mapping
+5. File Ownership Map
+6. Task Dependency Graph
+7. Task Status Table
+8. Task Plan
+9. Verification Plan
+10. Risk Gates
+11. Rollback / Recovery Plan
+12. Out-of-Scope Items
+13. Deferred Items
+14. Handoff Plan
+15. No Placeholder Check
+
+Every requirement must map to:
+
+- an implementation task
+- a verification task
+- an explicit deferred item
+- an explicit out-of-scope item
+
+The plan must not contain unresolved placeholders such as:
+
+- `TODO`
+- `TBD`
+- `similar to existing code`
+- `implement the obvious logic`
+- pseudocode presented as executable guidance
+- vague verification like `make sure it works`
+
+If details are unknown, the plan is not ready.
+
+---
+
+## 10. Plan Review Gate
+
+The plan is approved only if:
+
+- scope matches the spec and adds no opportunistic features
+- every requirement is mapped
+- task order and dependencies are coherent
+- parallel tasks have non-overlapping write sets
+- tests would fail before implementation and pass after
+- review gates are concrete
+- deployment, rollback, data, and security implications are handled
+- ambiguous requirements are returned to spec review
+- handoff impact is clear if multiple agents will be used
+
+Do not create the implementation branch until the plan is approved.
+
+---
+
+## 11. Branch / Worktree Gate
+
+After plan approval:
+
+1. Fetch the latest base branch.
+2. Create a branch or clean worktree from the correct base.
+3. Confirm the working tree does not contain unrelated local changes.
+4. Record the branch/worktree path in the plan and `docs/SESSION_HANDOFF.md`.
+
+Use a clean worktree when the current workspace has unrelated dirty files.
+
+---
+
+## 12. File Ownership and Lock Rule
+
+A task may only modify files listed in its owned files.
+
+If a task needs to modify an unowned file, it must stop and request a plan update.
+
+No two parallel tasks may own the same file.
+
+Shared files require serial execution.
+
+Examples of shared files:
+
+- package manager files
+- global config files
+- database schema files
+- migration directories
+- central API routers
+- shared type definitions
+- deployment files
+- CI files
+- `AGENTS.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- `docs/SESSION_HANDOFF.md`
+- `docs/HANDOFF_POLICY.md`
+
+---
+
+## 13. Task Execution Gate
+
+For each task:
+
+1. Re-read the task objective, owned files, and acceptance criteria.
+2. Write or update the failing test first when applicable.
+3. Run the focused test and confirm it fails for the expected reason.
+4. Implement the smallest change that passes the test.
+5. Run focused verification.
+6. Run broader verification when the touched surface justifies it.
+7. Perform implementer self-review.
+8. Run spec-compliance review.
+9. Run code-quality review.
+10. Fix findings and re-review before moving on.
+11. Update task status in the active plan.
+12. Update `docs/SESSION_HANDOFF.md`.
+
+Do not let a later task silently absorb unresolved findings from an earlier task.
+
+---
+
+## 14. Subagent-Driven Development Rules
+
+Use subagents only when the plan defines independent tasks.
+
+Each subagent prompt must include:
+
+- task objective
+- owned files
+- files not to touch
+- relevant spec sections
+- required tests
+- expected output
+- review criteria
+- reminder that other agents may be editing other files
+
+Subagents must not:
+
+- edit outside their owned files
+- rewrite unrelated code
+- change public behavior outside the task
+- skip tests
+- resolve spec ambiguity by guessing
+
+After each subagent finishes, the lead agent reviews and integrates the result before marking the task complete.
+
+---
+
+## 15. Session Save Handoff Mode
+
+Use this before a session ends, switches agent, switches model, or hands off work.
+
+Session save does not happen automatically.
+
+The current agent must update:
+
+1. `docs/SESSION_HANDOFF.md`
+2. a timestamped file under `docs/handoffs/`
+3. active implementation plan task status
+4. `docs/DECISIONS.md` if a durable decision was made
+5. `docs/RISK_REGISTER.md` if a new durable risk was discovered
+
+The handoff must include:
+
+- project
+- branch
+- worktree
+- base commit
+- current agent and role
+- active mode
+- active spec
+- active plan
+- active task
+- task status
+- user’s original goal
+- documents read
+- completed work
+- in-progress work
+- files changed
+- owned files
+- files not to touch
+- commands run
+- test results
+- known failures
+- open questions
+- risks
+- decisions
+- next recommended step
+- resume prompt
+
+After saving handoff, do not continue writing code unless explicitly instructed.
+
+---
+
+## 16. Session Restore Mode
+
+Use this when continuing in a new session, new chat, new model, or new agent.
+
+The receiving agent must first read:
+
+- `AGENTS.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- `docs/DOCUMENT_INDEX.md`
+- `docs/SESSION_HANDOFF.md`
+- `docs/HANDOFF_POLICY.md`
+- active spec
+- active plan
+- relevant docs listed in `docs/DOCUMENT_INDEX.md`
+
+The receiving agent must not modify code until it confirms:
+
+- current branch or worktree
+- active task
+- owned files
+- files not to touch
+- required tests
+- known failures
+- next recommended step
+
+If the receiving agent needs to modify files outside the owned file list, it must stop and request a plan update.
+
+---
+
+## 17. Agent Switch Handoff Gate
+
+A handoff is required when:
+
+- switching from Claude to Codex
+- switching from Codex to Claude
+- switching to another agent
+- starting a new chat/session
+- context is close to compaction
+- active task is interrupted
+- tests are failing and another agent must continue
+- implementation plan changes
+- current branch or worktree changes
+- a task completes and another agent will review or continue
+
+Use Session Save Handoff Mode before the switch.
+
+Use Session Restore Mode after the switch.
+
+---
+
+## 18. Session Compaction Rule
+
+Before context compaction, session reset, or model switch, the active agent must update the handoff.
+
+The handoff must include:
+
+- what was requested
+- what was read
+- what was changed
+- what was tested
+- what failed
+- decisions made
+- remaining work
+- exact next step
+- files that must not be touched
+- current branch or worktree
+- active spec, plan, and task ID
+
+The next agent must treat the handoff as the starting state, but must verify file state before modifying code.
+
+---
+
+## 19. Agent Output Contract
+
+Every agent must end non-trivial work with:
+
+- Role:
+- Task ID:
+- Summary:
+- Files changed:
+- Files intentionally not changed:
+- Tests added or changed:
+- Commands run:
+- Results:
+- Known failures:
+- Risks:
+- Deviations from plan:
+- Required follow-up:
+- Suggested next agent:
+- Handoff updated: yes / no
+
+---
+
+## 20. Review Agent Protocol
+
+A review agent must classify findings as:
+
+- blocker
+- must fix
+- should fix
+- optional
+- note
+
+Each finding must include:
+
+- file or task reference
+- problem
+- evidence
+- expected fix
+- whether it blocks merge
+
+The reviewer must not expand scope beyond the approved spec and plan.
+
+---
+
+## 21. Failure Recovery Gate
+
+When a task fails verification:
+
+1. Stop the task.
+2. Record the failed command and output.
+3. Classify the failure:
+   - test expectation wrong
+   - implementation bug
+   - environment issue
+   - missing dependency
+   - spec ambiguity
+   - unrelated pre-existing failure
+4. Fix only if inside the task scope.
+5. Escalate if outside the task scope.
+6. Update `docs/SESSION_HANDOFF.md`.
+
+---
+
+## 22. Final Integration Gate
+
+After all tasks:
+
+1. Review the full diff against the base branch.
+2. Check that every requirement is implemented or explicitly deferred.
+3. Run the required full verification suite.
+4. Run manual QA or e2e checks when user-facing or integration-heavy.
+5. Confirm docs, changelog, runbook, or migration notes are updated when applicable.
+6. Create a PR with summary, tests, risks, rollout, and rollback notes.
+7. Wait for CI.
+8. Merge only after review and required checks pass.
+9. Deploy / canary when applicable.
+10. Write a short retro if the change was non-trivial or the plan changed.
+11. Update final handoff.
+
+---
+
+## 23. Trivial Fix Exception
+
+A shorter path is allowed only for low-risk surgical fixes such as:
+
+- typo fixes
+- broken documentation links
+- formatting-only doc edits
+- one-line test expectation corrections with no behavior change
+
+The exception is not allowed for changes touching:
+
+- architecture
+- data model
+- credentials
+- production behavior
+- deployment
+- security
+- permissions
+- user-facing behavior
+- payment or trading behavior
+- irreversible operations
+
+When using the exception, state why the full spec-to-plan gate was unnecessary.
+
+---
+
+## 24. Root AGENTS.md Snippet
+
+Use this pointer in the project root `AGENTS.md`:
+
+```md
+## Implementation Workflow
+
+For non-trivial code changes, follow `docs/IMPLEMENTATION_WORKFLOW.md`.
+
+Do not implement directly from a spec. First review the spec, convert it into an implementation plan, review the plan, then create a branch or clean worktree and execute task-by-task with tests and review gates.
+
+Session save does not happen automatically. Before switching agents, switching sessions, compacting context, or stopping mid-task, update `docs/SESSION_HANDOFF.md` and create a timestamped handoff under `docs/handoffs/`.
+
+Trivial surgical fixes may use a shorter path only when they do not affect architecture, data model, credentials, deployment, security, production behavior, or user-facing behavior. State the reason explicitly.
+```
+
+
+---
+
+## Handoff Size Control and Compaction
+
+Session and agent handoff files must not grow without bound.
+
+Rules:
+
+1. `docs/SESSION_HANDOFF.md` is the current state file, not a history log.
+2. `docs/SESSION_HANDOFF.md` must be overwritten with the latest compact state, not appended forever.
+3. Historical handoffs go to `docs/handoffs/*.md`.
+4. Every handoff snapshot must be indexed in `docs/HANDOFF_INDEX.md`.
+5. Large logs, diffs, CI outputs, and traceback dumps must go to `docs/handoffs/artifacts/`, not into handoff markdown.
+6. Durable decisions must move to `docs/DECISIONS.md`.
+7. Durable risks must move to `docs/RISK_REGISTER.md`.
+8. Completed task details must live in the active plan, reviews, or retros, not in the current handoff.
+
+Size targets:
+
+| File | Target | Maximum |
+|---|---:|---:|
+| `docs/SESSION_HANDOFF.md` | 100 - 200 lines | 300 lines |
+| `docs/handoffs/*.md` | 80 - 150 lines | 250 lines |
+| `docs/HANDOFF_INDEX.md` | active recent entries | archive after 200 rows |
+
+Compaction is required when:
+
+- `SESSION_HANDOFF.md` exceeds 300 lines
+- a handoff snapshot exceeds 250 lines
+- long logs or diffs are pasted into handoff files
+- completed old tasks are repeatedly summarized in full
+- the next agent would need to read excessive history before continuing
+
+When compaction is required, perform Handoff Compaction before continuing implementation.
+
+Use `docs/HANDOFF_POLICY.md` for the detailed policy.

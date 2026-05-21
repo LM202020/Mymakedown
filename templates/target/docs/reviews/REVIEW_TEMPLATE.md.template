@@ -1,0 +1,47 @@
+# Review Template
+
+Filename pattern:
+
+```text
+YYYY-MM-DD-<task-or-feature>-review.md
+```
+
+## 1. Review Scope
+
+- Spec:
+- Plan:
+- Task:
+- Diff / commit:
+- Reviewer:
+- Date:
+
+## 2. Review Result
+
+- Accepted
+- Accepted with required fixes
+- Needs revision
+- Blocked
+
+## 3. Findings
+
+| Severity | File / Task | Problem | Evidence | Expected Fix | Blocks Merge? |
+|---|---|---|---|---|---|
+| blocker / must fix / should fix / optional / note | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 4. Spec Compliance
+
+## 5. Plan Compliance
+
+## 6. Code Quality
+
+## 7. Test Adequacy
+
+## 8. Risk Review
+
+## 9. Required Fixes
+
+## 10. Optional Improvements
+
+## 11. Reviewer Notes
+
+The reviewer must not expand scope beyond the approved spec and plan.

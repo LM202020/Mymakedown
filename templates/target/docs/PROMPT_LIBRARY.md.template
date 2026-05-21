@@ -1,0 +1,1193 @@
+# Prompt Library：常用自然语言指令库
+
+这份文件专门整理你平时可以直接对 Claude、Codex、其他 Agent 说的话。
+
+使用原则：
+
+1. 想让 Agent 做事时，直接复制对应段落。
+2. 不确定是否会改代码时，默认加上“先不要修改代码”。
+3. 老项目先用“接管/盘点”，不要直接“优化/重构”。
+4. 旧 Session 结束前用“Session Save”。
+5. 新 Session 开始后用“Session Restore”。
+6. 多 Agent 切换时，先 Save，再 Restore。
+7. 高风险区域必须显式禁止或显式审批。
+
+---
+
+# A. 新项目初始化
+
+## A1. 新项目完整初始化
+
+```text
+我现在有一个新项目，还有这套 Project Agent Workflow Framework v3。
+
+请按 New Project Bootstrap Mode 初始化这个项目。
+
+要求：
+
+1. 不要开始写业务功能代码。
+2. 创建或更新 AGENTS.md、CLAUDE.md、CODEX.md。
+3. 创建或更新 docs/IMPLEMENTATION_WORKFLOW.md。
+4. 创建或更新 docs/PROMPT_LIBRARY.md。
+5. 创建 PROJECT_CONTEXT、DOCUMENT_INDEX、AGENT_ROSTER、SESSION_HANDOFF、RISK_REGISTER、DECISIONS 等文档。
+6. 创建 docs/specs、docs/plans、docs/reviews、docs/handoffs、docs/retros、docs/archive 目录。
+7. 已知信息直接填写。
+8. 不知道的信息标记为 UNKNOWN。
+9. 不适用的信息标记为 N/A。
+10. deployment、credentials、database、CI、production 信息如果没有证据，全部标记为 UNKNOWN 或 N/A。
+11. 最后输出初始化摘要、创建的文件、仍需我确认的问题。
+```
+
+## A2. 新项目最小初始化
+
+```text
+请为这个新项目做最小 Agent 工作流初始化。
+
+只创建：
+
+1. AGENTS.md
+2. docs/IMPLEMENTATION_WORKFLOW.md
+3. docs/DOCUMENT_INDEX.md
+4. docs/SESSION_HANDOFF.md
+5. docs/PROMPT_LIBRARY.md
+6. docs/specs/
+7. docs/plans/
+8. docs/handoffs/
+
+不要写业务功能代码。
+未知信息写 UNKNOWN。
+不适用信息写 N/A。
+```
+
+## A3. 新项目只生成文档结构
+
+```text
+请只生成项目文档结构，不要写任何业务代码。
+
+要求：
+
+1. 建立 docs 目录和子目录。
+2. 建立 workflow、context、document index、handoff、risk、decisions、agent roster 文档。
+3. 每个文档只放模板和 UNKNOWN/N/A 占位。
+4. 不要推测技术栈、部署方式、数据库、CI。
+```
+
+## A4. 新项目初始化后补充项目事实
+
+```text
+请根据我提供的项目事实，更新项目工作流文档。
+
+要求：
+
+1. 更新 PROJECT_CONTEXT。
+2. 更新 IMPLEMENTATION_WORKFLOW 里的 Project Fill-In。
+3. 更新 DOCUMENT_INDEX。
+4. 更新 TEST_CONVENTIONS、DEPLOYMENT、SECURITY 中已知的部分。
+5. 没有证据的信息继续保持 UNKNOWN。
+6. 不要写业务代码。
+```
+
+---
+
+# B. 老项目接管
+
+## B1. 老项目完整接管
+
+```text
+我现在有一个老项目，还有这套 Project Agent Workflow Framework v3。
+
+请按 Existing Project Adoption Mode 接管这个项目。
+
+要求：
+
+1. 先不要修改业务代码。
+2. 扫描现有 README、docs、CI、测试配置、部署配置、数据库迁移、package 配置、AGENTS/CLAUDE/CODEX 文件。
+3. 生成或更新 docs/PROJECT_BASELINE.md。
+4. 生成或更新 docs/DOCUMENT_INDEX.md。
+5. 生成或更新 docs/DOC_MIGRATION_MAP.md。
+6. 如果文档冲突，生成或更新 docs/DOC_CONFLICTS.md。
+7. 补齐缺失的规范文档，但不要编造未知事实。
+8. 对旧文档分类：canonical、useful but incomplete、outdated、conflicting、archive candidate、unknown。
+9. 不要删除旧文档。
+10. 不要修改业务代码。
+11. 最后输出：已发现文档、已创建文档、冲突、缺失信息、下一步建议。
+```
+
+## B2. 老项目只盘点，不生成新文档
+
+```text
+请先只盘点这个老项目，不要生成新文档，不要修改代码。
+
+请输出：
+
+1. 现有 README 和 docs 列表。
+2. 现有 CI / workflow 文件。
+3. 现有测试配置。
+4. 现有部署配置。
+5. 现有数据库 / migration 信息。
+6. 现有 AGENTS / CLAUDE / CODEX 文件。
+7. 哪些文档看起来可能是权威文档。
+8. 哪些文档可能过期。
+9. 哪些地方存在冲突。
+10. 建议下一步如何接管。
+```
+
+## B3. 老项目补齐缺失文档
+
+```text
+请根据已有项目事实补齐缺失的规范文档。
+
+要求：
+
+1. 不要修改业务代码。
+2. 已经确认的信息写入对应文档。
+3. 不确定的信息写 UNKNOWN。
+4. 不适用的信息写 N/A。
+5. 不要为了填满文档而编造部署、数据库、CI、credentials、production 信息。
+6. 如果发现旧文档冲突，记录到 DOC_CONFLICTS，不要自行决定。
+```
+
+## B4. 老项目建立新旧文档映射
+
+```text
+请整理老项目现有文档和新框架文档之间的关系。
+
+要求：
+
+1. 更新 docs/DOC_MIGRATION_MAP.md。
+2. 把现有 README、docs、部署文档、测试文档、架构文档映射到新的 canonical docs。
+3. 对每个旧文档标记：canonical、useful but incomplete、outdated、conflicting、archive candidate、unknown。
+4. 不要删除旧文档。
+5. 如果存在冲突，写入 docs/DOC_CONFLICTS.md。
+```
+
+## B5. 老项目接管后生成优化计划
+
+```text
+请按 Existing Project Optimization Mode 为这个老项目生成优化计划。
+
+要求：
+
+1. 先读取 PROJECT_BASELINE、DOCUMENT_INDEX、DOC_MIGRATION_MAP、DOC_CONFLICTS、RISK_REGISTER、IMPLEMENTATION_WORKFLOW。
+2. 不要直接改代码。
+3. 把优化项分成 safe cleanup、test coverage improvement、documentation alignment、refactor、behavior change、architecture change、data/migration change、deployment change、security-sensitive change。
+4. deployment、credentials、systemd、production infrastructure、database migration、destructive operation 全部列为 P3 High Risk。
+5. 生成 docs/plans/ 下的 implementation plan。
+6. 不要开始执行计划。
+```
+
+---
+
+# C. Spec 相关
+
+## C1. 根据需求生成 Spec
+
+```text
+请基于我的需求生成 spec。
+
+要求：
+
+1. 使用 docs/specs/SPEC_TEMPLATE.md 的结构。
+2. 明确 goal、non-goals、requirements、acceptance criteria。
+3. 标出 data/security/deployment/rollback 影响。
+4. 不确定的地方列为 Open Questions。
+5. 不要开始写 implementation plan。
+6. 不要写代码。
+```
+
+## C2. 评审 Spec
+
+```text
+请按 Spec Review Gate 评审这个 spec。
+
+要求：
+
+1. 判断 Accepted、Accepted with constraints、Rejected / needs revision。
+2. 检查目标、非目标、需求是否可测试。
+3. 检查 security、data、migration、deployment、rollback 是否覆盖或标记 N/A。
+4. 所有会影响架构、数据模型、credentials、production behavior、user-facing behavior、安全的问题都要先列出来。
+5. 不要开始写代码。
+```
+
+## C3. 修订 Spec
+
+```text
+请根据 review feedback 修订 spec。
+
+要求：
+
+1. 保留原始目标。
+2. 明确新增、删除、修改了哪些 requirement。
+3. 不要扩大需求范围。
+4. unresolved 的问题继续放在 Open Questions。
+5. 修订后重新给出 Spec Review Checklist。
+6. 不要开始写 implementation plan。
+```
+
+## C4. 冻结 Spec
+
+```text
+请冻结当前 spec 作为本次实现的 canonical spec。
+
+要求：
+
+1. 标记 spec 状态为 Accepted。
+2. 写清楚 accepted constraints。
+3. 写清楚 out-of-scope。
+4. 写清楚之后 implementation plan 只能基于这个版本。
+5. 不要开始写代码。
+```
+
+---
+
+# D. Implementation Plan 相关
+
+## D1. 生成 Implementation Plan
+
+```text
+请根据已接受的 spec 生成 implementation plan。
+
+要求：
+
+1. 使用 docs/plans/IMPLEMENTATION_PLAN_TEMPLATE.md 的结构。
+2. 每个 requirement 必须映射到 task、verification、deferred 或 out-of-scope。
+3. 写清楚 File Ownership Map。
+4. 写清楚 Task Dependency Graph。
+5. 写清楚哪些 task 可以 parallel-safe，哪些必须 serial。
+6. 写清楚 focused verification command。
+7. 写清楚 Risk Gates。
+8. 写清楚 Handoff Plan。
+9. 不允许 TODO、TBD、implement the obvious logic、make sure it works 这类占位。
+10. 不要开始写代码。
+```
+
+## D2. 评审 Implementation Plan
+
+```text
+请按 Plan Review Gate 评审这个 implementation plan。
+
+要求：
+
+1. 检查 scope 是否严格匹配 spec。
+2. 检查每个 requirement 是否都有 mapping。
+3. 检查 task 顺序和依赖是否合理。
+4. 检查 parallel-safe task 是否真的没有重叠写文件。
+5. 检查 File Ownership Map 是否完整。
+6. 检查测试是否能先失败后通过。
+7. 检查 Risk Gates 是否完整。
+8. 检查 deployment、rollback、data、security 是否处理。
+9. 检查 handoff 点是否明确。
+10. 不要开始写代码。
+```
+
+## D3. 修订 Implementation Plan
+
+```text
+请根据 plan review feedback 修订 implementation plan。
+
+要求：
+
+1. 不要扩大 spec 范围。
+2. 修复 requirement mapping。
+3. 修复 task dependency graph。
+4. 修复 file ownership map。
+5. 修复 verification plan。
+6. 修复 risk gates。
+7. 更新 handoff plan。
+8. 不要开始写代码。
+```
+
+## D4. 检查计划是否可以交给 Codex
+
+```text
+请检查这个 implementation plan 是否可以交给 Codex 执行。
+
+要求：
+
+1. 每个 task 是否有明确 owned files。
+2. 每个 task 是否有 files not to touch。
+3. 每个 task 是否有 focused verification command。
+4. 是否存在需要人工确认的 risk gate。
+5. 是否存在 Codex 可能误改的共享文件。
+6. 输出可以执行、需要修订、或需要人工确认。
+7. 不要开始写代码。
+```
+
+---
+
+# E. 分支 / Worktree
+
+## E1. 准备分支
+
+```text
+请按 Branch / Worktree Gate 准备实现分支。
+
+要求：
+
+1. 确认当前 base branch。
+2. 检查工作区是否有 unrelated local changes。
+3. 如果工作区不干净，建议使用 clean worktree。
+4. 创建分支或 worktree 后，把 branch/worktree/base commit 写入 active plan 和 SESSION_HANDOFF。
+5. 不要开始写代码。
+```
+
+## E2. 检查当前工作区
+
+```text
+请检查当前工作区是否适合继续执行 active task。
+
+要求：
+
+1. 检查当前 branch。
+2. 检查 git status。
+3. 检查是否有 unrelated changes。
+4. 检查 SESSION_HANDOFF 记录的 branch/worktree 是否一致。
+5. 如果不一致，先停止并报告，不要改代码。
+```
+
+---
+
+# F. Task 执行
+
+## F1. 开始执行某个 Task
+
+```text
+请执行 active plan 中的 TASK-XXX。
+
+要求：
+
+1. 先读取 AGENTS.md、IMPLEMENTATION_WORKFLOW、DOCUMENT_INDEX、SESSION_HANDOFF、active plan。
+2. 复述 TASK-XXX 的 objective、owned files、files not to touch、acceptance criteria、focused verification command。
+3. 不要修改 owned files 之外的文件。
+4. 先写或运行 red test。
+5. 只做让当前 task 通过的最小改动。
+6. 跑 focused verification。
+7. 完成后更新 task status 和 SESSION_HANDOFF。
+8. 按 Agent Output Contract 输出。
+```
+
+## F2. 只写 Red Test
+
+```text
+请只为当前 task 写 red test。
+
+要求：
+
+1. 只修改 task 允许的 test files。
+2. 不要实现功能。
+3. 跑 focused test，确认失败原因符合预期。
+4. 把失败命令和输出摘要写入 SESSION_HANDOFF。
+5. 完成后停止，不要继续实现。
+```
+
+## F3. 继续当前 Task 的最小实现
+
+```text
+请继续当前 task 的最小实现。
+
+要求：
+
+1. 只修改 owned files。
+2. 目标是让刚才的 red test 通过。
+3. 不要顺手重构无关代码。
+4. 不要改 public behavior 之外的内容。
+5. 跑 focused verification。
+6. 更新 SESSION_HANDOFF。
+```
+
+## F4. Task 完成后自检
+
+```text
+请对当前 task 做 implementer self-review。
+
+要求：
+
+1. 对照 task objective。
+2. 对照 acceptance criteria。
+3. 对照 owned files。
+4. 对照 files not to touch。
+5. 对照 verification command。
+6. 检查是否有 scope creep。
+7. 检查是否有未记录风险。
+8. 输出 self-review 结果并更新 SESSION_HANDOFF。
+```
+
+## F5. Task 失败时停止诊断
+
+```text
+当前 task 的验证失败了。
+
+请按 Failure Recovery Gate 处理。
+
+要求：
+
+1. 停止继续实现。
+2. 记录失败命令和输出摘要。
+3. 判断失败类型：test expectation wrong、implementation bug、environment issue、missing dependency、spec ambiguity、unrelated pre-existing failure。
+4. 只在 task scope 内提出修复。
+5. 如果需要改 owned files 之外的文件，停止并请求 plan update。
+6. 更新 SESSION_HANDOFF。
+```
+
+---
+
+# G. Review 相关
+
+## G1. Claude 做 Review
+
+```text
+请读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/SESSION_HANDOFF.md、active plan 和本次 diff。
+
+你现在作为 Reviewer Agent 接手。
+
+要求：
+
+1. 不要直接重写代码。
+2. 按 spec compliance、plan compliance、code quality、test adequacy、risk 五类 review。
+3. finding 必须分为 blocker、must fix、should fix、optional、note。
+4. 每条 finding 必须说明文件、问题、证据、建议修复方式、是否阻塞合并。
+5. 不要提出超出 approved spec 和 active plan 的新需求。
+```
+
+## G2. Review 后生成修复任务
+
+```text
+请把 review findings 转成修复任务。
+
+要求：
+
+1. blocker 和 must fix 必须生成修复 task。
+2. should fix 需要判断是否进入当前 plan，还是 deferred。
+3. optional 只能作为建议，不得阻塞。
+4. 每个修复 task 必须有 owned files、files not to touch、verification command。
+5. 不要直接修改代码。
+```
+
+## G3. Codex 修 Review Findings
+
+```text
+请按 review findings 修复当前 task。
+
+要求：
+
+1. 只修 blocker 和 must fix。
+2. 不要处理 optional。
+3. 不要扩大 scope。
+4. 只修改修复 task 的 owned files。
+5. 跑 focused verification。
+6. 更新 SESSION_HANDOFF。
+7. 按 Agent Output Contract 输出。
+```
+
+---
+
+# H. 多 Agent 切换
+
+## H1. Claude 交给 Codex
+
+```text
+请准备交接给 Codex 执行。
+
+要求：
+
+1. 执行 Session Save Handoff。
+2. 更新 docs/SESSION_HANDOFF.md。
+3. 在 docs/handoffs/ 下面创建一份新的 handoff 快照。
+4. 更新 active implementation plan 里的 task status。
+5. 写清楚 active spec、active plan、active task。
+6. 写清楚 Codex 允许修改的 owned files。
+7. 写清楚 Codex 禁止修改的 files not to touch。
+8. 写清楚 required tests 和 focused verification command。
+9. 写清楚 known failures、risks、open questions。
+10. 写清楚 Codex 完成后应该按 Agent Output Contract 输出。
+11. 完成保存后，不要继续实现代码。
+```
+
+## H2. Codex 接手执行
+
+```text
+请执行 Session Restore。
+
+请读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/DOCUMENT_INDEX.md、docs/SESSION_HANDOFF.md 和 active plan。
+
+你现在作为 Implementer Agent 接手。
+
+要求：
+
+1. 先复述当前 active task、owned files、files not to touch、required tests、known failures、next recommended step。
+2. 不要修改未授权文件。
+3. 先写或运行 red test。
+4. 只实现当前 task 所需的最小改动。
+5. 跑 focused verification。
+6. 完成后按 Agent Output Contract 输出结果。
+7. 更新 docs/SESSION_HANDOFF.md。
+8. 如果需要改 owned files 之外的文件，必须停止并更新 plan，不要直接改。
+```
+
+## H3. Codex 交给 Claude Review
+
+```text
+请准备交接给 Claude review。
+
+要求：
+
+1. 执行 Session Save Handoff。
+2. 更新 docs/SESSION_HANDOFF.md。
+3. 在 docs/handoffs/ 下面创建本次 handoff 快照。
+4. 更新 active plan 里的 task status。
+5. 写清楚本次修改的文件和修改原因。
+6. 写清楚运行过的测试命令和结果。
+7. 写清楚 known failures、deviations from plan、risks。
+8. 写清楚 Claude 应该 review 的重点。
+9. 完成保存后，不要继续扩大实现范围。
+```
+
+## H4. Claude 接手 Review
+
+```text
+请执行 Session Restore。
+
+请读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/SESSION_HANDOFF.md、active plan 和本次 diff。
+
+你现在作为 Reviewer Agent 接手。
+
+要求：
+
+1. 不要直接重写代码。
+2. 按 spec compliance、plan compliance、code quality、test adequacy、risk 五类 review。
+3. finding 必须分为 blocker、must fix、should fix、optional、note。
+4. 每条 finding 必须说明文件、问题、证据、建议修复方式、是否阻塞合并。
+5. 不要提出超出 approved spec 和 active plan 的新需求。
+```
+
+## H5. 交给 Documentation Agent
+
+```text
+请准备交接给 Documentation Agent。
+
+要求：
+
+1. 执行 Session Save Handoff。
+2. 写清楚需要更新的文档。
+3. 写清楚哪些事实已经确认，哪些只能写 UNKNOWN。
+4. 写清楚不能修改业务代码。
+5. 写清楚不能改 spec 范围。
+6. 写清楚文档更新完成后要更新 SESSION_HANDOFF。
+```
+
+---
+
+# I. Session 保存、恢复、压缩
+
+## I1. 旧 Session 保存 / Session Save Handoff
+
+```text
+当前 session 准备结束、切换、压缩或交接。
+
+请执行 Session Save Handoff。
+
+要求：
+
+1. 更新 docs/SESSION_HANDOFF.md，作为下一次恢复的唯一当前入口。
+2. 在 docs/handoffs/ 下面创建一份带时间戳的 handoff 快照。
+3. 更新 active implementation plan 里的 task status。
+4. 写清楚当前 project、branch、worktree、base commit。
+5. 写清楚当前 agent、role、active mode。
+6. 写清楚 active spec、active plan、active task、task status。
+7. 写清楚本 session 用户原始目标。
+8. 写清楚本 session 读过哪些文档。
+9. 写清楚已经完成了什么。
+10. 写清楚正在进行但未完成的内容。
+11. 写清楚改了哪些文件。
+12. 写清楚当前 task 允许修改的 owned files。
+13. 写清楚下个 Agent 禁止修改的 files not to touch。
+14. 写清楚运行过哪些命令。
+15. 写清楚测试结果。
+16. 写清楚 known failures、open questions、risks。
+17. 写清楚 decisions made；如果是长期决策，也同步更新 docs/DECISIONS.md。
+18. 如果发现新风险，也同步更新 docs/RISK_REGISTER.md。
+19. 写清楚 next recommended step，只给一个最推荐的下一步。
+20. 写清楚给下一个 Agent 的 Resume Prompt。
+21. 完成保存后，不要继续写新代码。
+```
+
+## I2. 旧 Session 保存，但 Agent 不能写文件
+
+```text
+当前 session 准备结束、切换、压缩或交接。
+
+请生成 Session Save Handoff 内容。
+
+要求：
+
+1. 按 docs/SESSION_HANDOFF.md 的结构生成完整内容。
+2. 再生成一份 docs/handoffs/ 历史快照内容。
+3. 再生成 active implementation plan 里 task status 应该如何更新。
+4. 不要继续写新代码。
+5. 输出内容要让我可以直接复制到对应文件。
+```
+
+## I3. 新 Session 恢复 / Session Restore
+
+```text
+这是一个继续开发 session。
+
+请执行 Session Restore。
+
+请先读取：
+
+1. AGENTS.md
+2. docs/IMPLEMENTATION_WORKFLOW.md
+3. docs/DOCUMENT_INDEX.md
+4. docs/SESSION_HANDOFF.md
+5. SESSION_HANDOFF.md 里标记的 active spec
+6. SESSION_HANDOFF.md 里标记的 active plan
+
+读取后不要马上改代码。
+
+先输出：
+
+1. 当前项目状态
+2. 当前 active task
+3. owned files
+4. files not to touch
+5. required verification command
+6. known failures
+7. next recommended step
+
+然后等我确认。
+```
+
+## I4. 新 Session 自动继续
+
+```text
+这是一个继续开发 session。
+
+请执行 Session Restore。
+
+请先读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/DOCUMENT_INDEX.md、docs/SESSION_HANDOFF.md、active spec 和 active plan。
+
+读取后先确认：
+
+1. 当前项目状态
+2. 当前 active task
+3. owned files
+4. files not to touch
+5. required verification command
+6. known failures
+7. next recommended step
+
+确认后继续执行 next recommended step，但不得修改 owned files 之外的文件。
+```
+
+## I5. 上下文快满 / Session Compaction
+
+```text
+当前 session 准备压缩或结束。
+
+请执行 Session Compaction Handoff。
+
+要求：
+
+1. 更新 docs/SESSION_HANDOFF.md。
+2. 在 docs/handoffs/ 下面创建一份 session-compaction 快照。
+3. 写清楚本 session 用户原始目标。
+4. 写清楚读过哪些文档。
+5. 写清楚完成了什么。
+6. 写清楚改了哪些文件。
+7. 写清楚运行了哪些命令。
+8. 写清楚测试结果。
+9. 写清楚失败点和阻塞点。
+10. 写清楚当前 active task。
+11. 写清楚下一步唯一推荐动作。
+12. 写清楚下个 Agent 不能碰哪些文件。
+13. 不要继续写新代码。
+```
+
+## I6. 突然中断后的恢复检查
+
+```text
+上一个 session 可能没有正常保存。
+
+请先做恢复检查，不要修改代码。
+
+要求：
+
+1. 读取 AGENTS.md、IMPLEMENTATION_WORKFLOW、DOCUMENT_INDEX、SESSION_HANDOFF。
+2. 检查 SESSION_HANDOFF 是否完整。
+3. 检查 git status。
+4. 检查 active plan 的 task status。
+5. 对比实际文件修改和 SESSION_HANDOFF 记录是否一致。
+6. 如果不一致，输出恢复建议。
+7. 不要继续实现。
+```
+
+---
+
+# J. 文档同步与冲突
+
+## J1. 检查文档是否过期
+
+```text
+请检查项目文档是否过期。
+
+要求：
+
+1. 对比 README、docs、代码结构、测试命令、CI 配置。
+2. 标记文档状态：canonical、useful but incomplete、outdated、conflicting、archive candidate、unknown。
+3. 更新 DOC_MIGRATION_MAP。
+4. 冲突写入 DOC_CONFLICTS。
+5. 不要修改业务代码。
+```
+
+## J2. 解决文档冲突
+
+```text
+请根据 Document Authority Order 分析这些文档冲突。
+
+要求：
+
+1. 列出冲突来源。
+2. 标明哪个来源 authority 更高。
+3. 判断能否自动解决。
+4. 不能自动解决的列为 Required Decision。
+5. 更新 DOC_CONFLICTS。
+6. 不要改业务代码。
+```
+
+## J3. 更新 Document Index
+
+```text
+请更新 docs/DOCUMENT_INDEX.md。
+
+要求：
+
+1. 根据当前项目结构补充什么场景应该读什么文档。
+2. 不要让 Agent 默认读取所有文档。
+3. 对架构、API、数据库、测试、部署、安全、debug、handoff 分别列出需要读取的文件。
+4. 不要修改业务代码。
+```
+
+---
+
+# K. 风险控制
+
+## K1. 高风险变更检查
+
+```text
+请对当前需求做 Risk Gate 检查。
+
+重点检查是否触碰：
+
+1. credentials / secrets / tokens
+2. personal data / regulated data
+3. payments / trading / money movement
+4. production infrastructure
+5. deployment / rollback
+6. data model / migrations
+7. permissions / access control
+8. destructive operations
+9. safety-critical behavior
+
+输出风险等级、是否需要人工确认、是否可以继续 plan。
+不要写代码。
+```
+
+## K2. 禁止触碰生产/部署
+
+```text
+本次任务不允许触碰 credentials、deployment、systemd、CI、production infrastructure、database migrations、destructive operations。
+
+请把这些全部写入 files not to touch 和 risk gates。
+
+如果实现过程中发现必须修改这些区域，请立即停止并请求我确认。
+```
+
+## K3. 发现需要越权修改
+
+```text
+你现在发现需要修改 owned files 之外的文件。
+
+请停止实现。
+
+要求：
+
+1. 说明为什么需要修改额外文件。
+2. 说明不修改会有什么影响。
+3. 判断这是 plan 缺失、spec ambiguity、还是实现路径选择问题。
+4. 提出 plan update 建议。
+5. 不要直接修改额外文件。
+```
+
+---
+
+# L. 测试和验证
+
+## L1. 只运行 focused verification
+
+```text
+请只运行当前 task 的 focused verification。
+
+要求：
+
+1. 使用 active plan 里指定的 focused verification command。
+2. 不要顺手跑无关命令。
+3. 记录结果。
+4. 如果失败，按 Failure Recovery Gate 分类。
+5. 更新 SESSION_HANDOFF。
+```
+
+## L2. 跑完整验证
+
+```text
+请按 Verification Plan 运行完整验证。
+
+要求：
+
+1. 跑 focused tests。
+2. 跑 full tests。
+3. 跑 lint/typecheck。
+4. 跑 build。
+5. 需要 manual QA 的列出步骤。
+6. 记录所有命令和结果。
+7. 更新 SESSION_HANDOFF。
+```
+
+## L3. 处理预先存在的失败
+
+```text
+如果验证失败，请先判断是否是 pre-existing failure。
+
+要求：
+
+1. 对比当前 task 修改范围。
+2. 判断失败是否和当前 task 相关。
+3. 如果无关，记录为 pre-existing failure。
+4. 不要为了修无关失败扩大 scope。
+5. 把结果写入 SESSION_HANDOFF。
+```
+
+---
+
+# M. 最终集成 / PR / Retro
+
+## M1. 最终集成检查
+
+```text
+请按 Final Integration Gate 做最终集成检查。
+
+要求：
+
+1. Review full diff against base branch。
+2. 检查每个 requirement 是否 implemented、deferred 或 out-of-scope。
+3. 运行 required full verification suite。
+4. 检查 docs、changelog、runbook、migration notes 是否需要更新。
+5. 输出 PR summary、tests、risks、rollout、rollback notes。
+6. 更新 docs/SESSION_HANDOFF.md。
+7. 如果是非平凡改动，生成 retro。
+```
+
+## M2. 生成 PR Summary
+
+```text
+请生成 PR Summary。
+
+要求包含：
+
+1. What changed
+2. Why
+3. Tests run
+4. Risk gates
+5. Rollout notes
+6. Rollback notes
+7. Deferred items
+8. Known limitations
+
+不要夸大实现范围。
+不要写没有运行过的测试。
+```
+
+## M3. 生成 Retro
+
+```text
+请为这次非平凡改动生成 retro。
+
+要求使用 docs/retros/RETRO_TEMPLATE.md。
+
+重点写：
+
+1. 实际做了什么。
+2. 和 plan 有哪些偏差。
+3. 哪些地方需要改进。
+4. 哪些文档需要更新。
+5. 后续 follow-up tasks。
+```
+
+---
+
+# N. 常用短句
+
+## N1. 安全开场
+
+```text
+先不要改代码，先分析。
+```
+
+```text
+先不要执行，先给计划。
+```
+
+```text
+不要猜，不确定就写 UNKNOWN。
+```
+
+```text
+不适用就写 N/A，不要硬填。
+```
+
+```text
+不要触碰 credentials、deployment、systemd、database migrations。
+```
+
+## N2. 控制范围
+
+```text
+只处理当前 active task。
+```
+
+```text
+不要顺手重构。
+```
+
+```text
+不要扩大 scope。
+```
+
+```text
+不要修改 owned files 之外的文件。
+```
+
+```text
+如果需要越权修改，先停下来说明原因。
+```
+
+## N3. 多 Agent
+
+```text
+请按 Planner Agent 角色处理，不要写代码。
+```
+
+```text
+请按 Implementer Agent 角色处理，只改 owned files。
+```
+
+```text
+请按 Reviewer Agent 角色处理，不要直接重写代码。
+```
+
+```text
+请准备交接给 Codex。
+```
+
+```text
+请准备交接给 Claude review。
+```
+
+## N4. Session
+
+```text
+请执行 Session Save Handoff。
+```
+
+```text
+请执行 Session Restore。
+```
+
+```text
+请执行 Session Compaction Handoff。
+```
+
+```text
+旧窗口负责保存，新窗口负责恢复。
+```
+
+```text
+没有保存，就不要假装可以无损恢复。
+```
+
+## N5. 验证
+
+```text
+只跑 focused verification。
+```
+
+```text
+按 Verification Plan 跑完整验证。
+```
+
+```text
+失败后不要继续改，先按 Failure Recovery Gate 分类。
+```
+
+```text
+不要写没有实际运行过的测试结果。
+```
+
+## N6. 文档
+
+```text
+请更新 DOCUMENT_INDEX。
+```
+
+```text
+请更新 DOC_MIGRATION_MAP。
+```
+
+```text
+如果文档冲突，写入 DOC_CONFLICTS，不要自行决定。
+```
+
+```text
+长期决策写入 DECISIONS。
+```
+
+```text
+长期风险写入 RISK_REGISTER。
+```
+
+
+---
+
+# O. 交接文件瘦身 / 防止 Handoff 膨胀
+
+## O1. 检查交接文件是否膨胀
+
+```text
+请检查 Session / Agent 交接文件是否膨胀。
+
+要求：
+
+1. 读取 docs/HANDOFF_POLICY.md、docs/SESSION_HANDOFF.md、docs/HANDOFF_INDEX.md 和 active plan。
+2. 检查 SESSION_HANDOFF 是否超过 300 行。
+3. 检查每个 handoff 快照是否超过 250 行。
+4. 检查是否粘贴了长日志、长 diff、长 traceback、完整 spec、完整 plan。
+5. 检查 Completed Work 是否重复展开旧 task。
+6. 检查 Commands Run 是否超过 10 条。
+7. 输出膨胀点和优化建议。
+8. 不要修改业务代码。
+```
+
+## O2. 执行 Handoff Compaction
+
+```text
+请执行 Handoff Compaction。
+
+要求：
+
+1. 读取 docs/HANDOFF_POLICY.md。
+2. 重写 docs/SESSION_HANDOFF.md，只保留当前恢复所需状态。
+3. 删除旧 task 的展开细节，只保留一行引用 active plan。
+4. 把历史 handoff 记录写入 docs/HANDOFF_INDEX.md。
+5. 把长期决策移动或引用到 docs/DECISIONS.md。
+6. 把长期风险移动或引用到 docs/RISK_REGISTER.md。
+7. 把大日志、大测试输出、大 traceback 移到 docs/handoffs/artifacts/。
+8. 不要修改业务代码。
+```
+
+## O3. 保存 Session，但禁止膨胀
+
+```text
+请执行 Session Save Handoff，但必须遵守 docs/HANDOFF_POLICY.md。
+
+要求：
+
+1. 覆盖更新 docs/SESSION_HANDOFF.md，不要追加历史。
+2. 创建一份短 handoff 快照到 docs/handoffs/。
+3. 更新 docs/HANDOFF_INDEX.md。
+4. 更新 active plan task status。
+5. 不要粘贴完整日志、完整 diff、完整 spec、完整 plan。
+6. 大输出只保存到 docs/handoffs/artifacts/ 并在 handoff 中引用路径。
+7. SESSION_HANDOFF 保持在 100-200 行，最多 300 行。
+8. 完成后不要继续写代码。
+```
+
+## O4. 多 Agent 并行时避免抢写 Handoff
+
+```text
+当前有多个 Agent 或子 Agent 并行工作。
+
+请按 Handoff Policy 处理交接记录：
+
+1. 子 Agent 不直接改 docs/SESSION_HANDOFF.md。
+2. 子 Agent 只输出 Agent Output Contract。
+3. 如需保存记录，子 Agent 写独立 docs/handoffs/ 快照。
+4. Lead Agent 汇总后统一更新 docs/SESSION_HANDOFF.md。
+5. Lead Agent 更新 docs/HANDOFF_INDEX.md。
+6. 不要让多个 Agent 同时追加 SESSION_HANDOFF。
+```
+
+
+---
+
+# P. 入口文件安全合并 / 防止覆盖 AGENTS、CLAUDE、CODEX
+
+## P1. 检查入口文件是否已存在
+
+```text
+请检查项目根目录是否已有 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+
+要求：
+
+1. 只检查和分析，不要修改文件。
+2. 如果文件存在，摘要已有规则。
+3. 检查是否已经有 BEGIN PROJECT_AGENT_WORKFLOW / END PROJECT_AGENT_WORKFLOW 受控区块。
+4. 判断是否和当前框架规则冲突。
+5. 输出建议：create from template、append managed block、update managed block、proposed patch only、no change、conflict requires decision。
+```
+
+## P2. 安全合并入口文件
+
+```text
+请按 Entry Point Merge Policy 处理 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+
+要求：
+
+1. 如果文件不存在，才从 templates/target/root/*.template 创建。
+2. 如果文件已存在，不要覆盖。
+3. 读取已有内容，保留项目原有规则。
+4. 只追加或更新 BEGIN PROJECT_AGENT_WORKFLOW / END PROJECT_AGENT_WORKFLOW 之间的受控区块。
+5. 如果已有规则和新框架冲突，不要自行决定，写入 docs/DOC_CONFLICTS.md。
+6. 更新 docs/DOC_MIGRATION_MAP.md。
+7. 更新 docs/adoption/ENTRYPOINT_MERGE_PLAN.md。
+8. 更新 docs/SESSION_HANDOFF.md。
+```
+
+## P3. 老项目只生成入口文件合并计划
+
+```text
+这个老项目可能已经有 AGENTS.md、CLAUDE.md、CODEX.md。
+
+请只生成入口文件合并计划，不要修改文件。
+
+要求：
+
+1. 读取现有 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+2. 对比 templates/target/root/*.template 和 templates/target/root/*.append-snippet.md。
+3. 生成 docs/adoption/ENTRYPOINT_MERGE_PLAN.md。
+4. 如果有冲突，写入 docs/DOC_CONFLICTS.md。
+5. 不要覆盖任何已有文件。
+6. 不要修改业务代码。
+```
+
+## P4. 更新已有受控区块
+
+```text
+请只更新 PROJECT_AGENT_WORKFLOW 受控区块。
+
+要求：
+
+1. 只修改 BEGIN PROJECT_AGENT_WORKFLOW 和 END PROJECT_AGENT_WORKFLOW 之间的内容。
+2. 不要修改区块外的项目原有说明。
+3. 如果找不到受控区块，先停止并建议 append snippet。
+4. 如果区块外规则冲突，写入 DOC_CONFLICTS。
+```

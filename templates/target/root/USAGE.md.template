@@ -1,0 +1,557 @@
+# 使用说明：Project Agent Workflow Framework v7
+
+这套框架的目标是让一个项目可以被 Claude、Codex、以及其他 Agent 稳定接手、规划、实现、评审和交接。
+
+v3 的重点是：**把常用自然语言指令整理成文档**，你以后不用每次重新想怎么说，直接复制 `QUICK_PROMPTS.md` 或 `docs/PROMPT_LIBRARY.md` 里的内容即可。
+
+---
+
+## 1. 你应该怎么理解这套框架
+
+它分成五层：
+
+| 层级 | 作用 |
+|---|---|
+| 根入口 | `AGENTS.md`、`CLAUDE.md`、`CODEX.md`，告诉不同 Agent 先读什么、不能做什么 |
+| 核心流程 | `docs/IMPLEMENTATION_WORKFLOW.md`，规定 spec、plan、review、task、handoff 的完整流程 |
+| 自然语言指令库 | `QUICK_PROMPTS.md`、`docs/PROMPT_LIBRARY.md`，存放你平时对 Agent 说的话 |
+| 项目事实 | `PROJECT_CONTEXT`、`PROJECT_BASELINE`、`ARCHITECTURE`、`DEPLOYMENT`、`SECURITY` 等 |
+| 过程记录 | `SESSION_HANDOFF`、`docs/handoffs/`、`plans/`、`reviews/`、`retros/` |
+
+最重要的入口文件是：
+
+```text
+AGENTS.md
+docs/IMPLEMENTATION_WORKFLOW.md
+docs/DOCUMENT_INDEX.md
+docs/SESSION_HANDOFF.md
+docs/PROMPT_LIBRARY.md
+```
+
+---
+
+## 2. 什么时候看哪个 Prompt 文件
+
+| 文件 | 用法 |
+|---|---|
+| `QUICK_PROMPTS.md` | 常用短 prompt，适合直接复制 |
+| `docs/PROMPT_LIBRARY.md` | 完整自然语言指令库，按场景分类 |
+| `USAGE.md` | 说明整个框架怎么用 |
+| `docs/IMPLEMENTATION_WORKFLOW.md` | Agent 必须遵守的正式规则 |
+
+建议：
+
+- 平时你复制 `QUICK_PROMPTS.md`。
+- 复杂场景复制 `docs/PROMPT_LIBRARY.md`。
+- 想改规则时改 `IMPLEMENTATION_WORKFLOW.md`。
+- 想改说法时改 `PROMPT_LIBRARY.md`。
+
+---
+
+## 3. 新项目怎么用
+
+### 3.1 放置方式
+
+把整个框架复制到新项目根目录。
+
+如果是 zip 包，解压到项目根目录即可。
+
+```bash
+unzip project_agent_workflow_framework_v7.zip -d .
+```
+
+### 3.2 给 Agent 的常用说法
+
+```text
+我现在有一个新项目，还有这套 Project Agent Workflow Framework v7。
+
+请按 New Project Bootstrap Mode 初始化这个项目。
+
+要求：
+
+1. 不要开始写业务功能代码。
+2. 创建或更新 AGENTS.md、CLAUDE.md、CODEX.md。
+3. 创建或更新 docs/IMPLEMENTATION_WORKFLOW.md。
+4. 创建或更新 docs/PROMPT_LIBRARY.md。
+5. 创建 PROJECT_CONTEXT、DOCUMENT_INDEX、AGENT_ROSTER、SESSION_HANDOFF、RISK_REGISTER、DECISIONS 等文档。
+6. 创建 docs/specs、docs/plans、docs/reviews、docs/handoffs、docs/retros、docs/archive 目录。
+7. 已知信息直接填写。
+8. 不知道的信息标记为 UNKNOWN。
+9. 不适用的信息标记为 N/A。
+10. deployment、credentials、database、CI、production 信息如果没有证据，全部标记为 UNKNOWN 或 N/A。
+11. 最后输出初始化摘要、创建的文件、仍需我确认的问题。
+```
+
+### 3.3 新项目完成标准
+
+新项目初始化完成后，至少应该有：
+
+```text
+AGENTS.md
+CLAUDE.md
+CODEX.md
+docs/IMPLEMENTATION_WORKFLOW.md
+docs/PROMPT_LIBRARY.md
+docs/DOCUMENT_INDEX.md
+docs/SESSION_HANDOFF.md
+docs/AGENT_ROSTER.md
+docs/specs/
+docs/plans/
+docs/handoffs/
+```
+
+新项目初始化阶段不要写业务代码。
+
+---
+
+## 4. 老项目怎么用
+
+老项目不要一上来就让 Agent 优化代码。
+
+应该先执行 Existing Project Adoption Mode。
+
+### 4.1 给 Agent 的常用说法
+
+```text
+我现在有一个老项目，还有这套 Project Agent Workflow Framework v7。
+
+请按 Existing Project Adoption Mode 接管这个项目。
+
+要求：
+
+1. 先不要修改业务代码。
+2. 扫描现有 README、docs、CI、测试配置、部署配置、数据库迁移、package 配置、AGENTS/CLAUDE/CODEX 文件。
+3. 生成或更新 docs/PROJECT_BASELINE.md。
+4. 生成或更新 docs/DOCUMENT_INDEX.md。
+5. 生成或更新 docs/DOC_MIGRATION_MAP.md。
+6. 如果文档冲突，生成或更新 docs/DOC_CONFLICTS.md。
+7. 补齐缺失的规范文档，但不要编造未知事实。
+8. 对旧文档分类：canonical、useful but incomplete、outdated、conflicting、archive candidate、unknown。
+9. 不要删除旧文档。
+10. 不要修改业务代码。
+11. 最后输出：已发现文档、已创建文档、冲突、缺失信息、下一步建议。
+```
+
+### 4.2 老项目接管完成后，才能优化
+
+```text
+请按 Existing Project Optimization Mode 为这个老项目生成优化计划。
+
+要求：
+
+1. 先读取 PROJECT_BASELINE、DOCUMENT_INDEX、DOC_MIGRATION_MAP、DOC_CONFLICTS、RISK_REGISTER、IMPLEMENTATION_WORKFLOW。
+2. 不要直接改代码。
+3. 把优化项分成 safe cleanup、test coverage improvement、documentation alignment、refactor、behavior change、architecture change、data/migration change、deployment change、security-sensitive change。
+4. 任何 deployment、credentials、systemd、production infrastructure、database migration、destructive operation 都必须单独列为 P3 High Risk。
+5. 生成 docs/plans/ 下的 implementation plan。
+```
+
+---
+
+## 5. Session 怎么保存和恢复
+
+这是 v3 的核心。
+
+Session 不会自动保存。你必须明确让 Agent 保存。
+
+正确流程：
+
+```text
+旧 Session 保存
+  ↓
+生成/更新 docs/SESSION_HANDOFF.md
+  ↓
+生成 docs/handoffs/历史快照
+  ↓
+更新 active plan 的 task status
+  ↓
+新 Session 读取 handoff 恢复
+```
+
+一句话：
+
+```text
+旧窗口负责保存，新窗口负责恢复。
+没有保存，就不要假装可以无损恢复。
+```
+
+---
+
+## 6. 旧 Session 保存
+
+### 6.1 正常保存
+
+```text
+当前 session 准备结束、切换、压缩或交接。
+
+请执行 Session Save Handoff。
+
+要求：
+
+1. 更新 docs/SESSION_HANDOFF.md，作为下一次恢复的唯一当前入口。
+2. 在 docs/handoffs/ 下面创建一份带时间戳的 handoff 快照。
+3. 更新 active implementation plan 里的 task status。
+4. 写清楚当前 project、branch、worktree、base commit。
+5. 写清楚当前 agent、role、active mode。
+6. 写清楚 active spec、active plan、active task、task status。
+7. 写清楚本 session 用户原始目标。
+8. 写清楚本 session 读过哪些文档。
+9. 写清楚已经完成了什么。
+10. 写清楚正在进行但未完成的内容。
+11. 写清楚改了哪些文件。
+12. 写清楚当前 task 允许修改的 owned files。
+13. 写清楚下个 Agent 禁止修改的 files not to touch。
+14. 写清楚运行过哪些命令。
+15. 写清楚测试结果。
+16. 写清楚 known failures、open questions、risks。
+17. 写清楚 decisions made；如果是长期决策，也同步更新 docs/DECISIONS.md。
+18. 如果发现新风险，也同步更新 docs/RISK_REGISTER.md。
+19. 写清楚 next recommended step，只给一个最推荐的下一步。
+20. 写清楚给下一个 Agent 的 Resume Prompt。
+21. 完成保存后，不要继续写新代码。
+```
+
+### 6.2 Agent 不能写文件时
+
+```text
+当前 session 准备结束、切换、压缩或交接。
+
+请生成 Session Save Handoff 内容。
+
+要求：
+
+1. 按 docs/SESSION_HANDOFF.md 的结构生成完整内容。
+2. 再生成一份 docs/handoffs/ 历史快照内容。
+3. 再生成 active implementation plan 里 task status 应该如何更新。
+4. 不要继续写新代码。
+5. 输出内容要让我可以直接复制到对应文件。
+```
+
+---
+
+## 7. 新 Session 恢复
+
+### 7.1 恢复后等确认
+
+```text
+这是一个继续开发 session。
+
+请执行 Session Restore。
+
+请先读取：
+
+1. AGENTS.md
+2. docs/IMPLEMENTATION_WORKFLOW.md
+3. docs/DOCUMENT_INDEX.md
+4. docs/SESSION_HANDOFF.md
+5. SESSION_HANDOFF.md 里标记的 active spec
+6. SESSION_HANDOFF.md 里标记的 active plan
+
+读取后不要马上改代码。
+
+先输出：
+
+1. 当前项目状态
+2. 当前 active task
+3. owned files
+4. files not to touch
+5. required verification command
+6. known failures
+7. next recommended step
+
+然后等我确认。
+```
+
+### 7.2 恢复后自动继续
+
+```text
+这是一个继续开发 session。
+
+请执行 Session Restore。
+
+请先读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/DOCUMENT_INDEX.md、docs/SESSION_HANDOFF.md、active spec 和 active plan。
+
+读取后先确认：
+
+1. 当前项目状态
+2. 当前 active task
+3. owned files
+4. files not to touch
+5. required verification command
+6. known failures
+7. next recommended step
+
+确认后继续执行 next recommended step，但不得修改 owned files 之外的文件。
+```
+
+---
+
+## 8. Claude 和 Codex 怎么切换
+
+### 8.1 Claude 交给 Codex
+
+```text
+请准备交接给 Codex 执行。
+
+要求：
+
+1. 执行 Session Save Handoff。
+2. 更新 docs/SESSION_HANDOFF.md。
+3. 在 docs/handoffs/ 下面创建一份新的 handoff 快照。
+4. 更新 active implementation plan 里的 task status。
+5. 写清楚 active spec、active plan、active task。
+6. 写清楚 Codex 允许修改的 owned files。
+7. 写清楚 Codex 禁止修改的 files not to touch。
+8. 写清楚 required tests 和 focused verification command。
+9. 写清楚 known failures、risks、open questions。
+10. 写清楚 Codex 完成后应该按 Agent Output Contract 输出。
+11. 完成保存后，不要继续实现代码。
+```
+
+### 8.2 Codex 接手
+
+```text
+请执行 Session Restore。
+
+请读取 AGENTS.md、docs/IMPLEMENTATION_WORKFLOW.md、docs/DOCUMENT_INDEX.md、docs/SESSION_HANDOFF.md 和 active plan。
+
+你现在作为 Implementer Agent 接手。
+
+要求：
+
+1. 先复述当前 active task、owned files、files not to touch、required tests、known failures、next recommended step。
+2. 不要修改未授权文件。
+3. 先写或运行 red test。
+4. 只实现当前 task 所需的最小改动。
+5. 跑 focused verification。
+6. 完成后按 Agent Output Contract 输出结果。
+7. 更新 docs/SESSION_HANDOFF.md。
+8. 如果需要改 owned files 之外的文件，必须停止并更新 plan，不要直接改。
+```
+
+### 8.3 Codex 交给 Claude Review
+
+```text
+请准备交接给 Claude review。
+
+要求：
+
+1. 执行 Session Save Handoff。
+2. 更新 docs/SESSION_HANDOFF.md。
+3. 在 docs/handoffs/ 下面创建本次 handoff 快照。
+4. 更新 active plan 里的 task status。
+5. 写清楚本次修改的文件和修改原因。
+6. 写清楚运行过的测试命令和结果。
+7. 写清楚 known failures、deviations from plan、risks。
+8. 写清楚 Claude 应该 review 的重点。
+9. 完成保存后，不要继续扩大实现范围。
+```
+
+---
+
+## 9. 每次任务的标准流程
+
+```text
+Read
+  ↓
+Confirm
+  ↓
+Work
+  ↓
+Verify
+  ↓
+Review
+  ↓
+Save Handoff
+```
+
+含义：
+
+| 阶段 | 要做什么 |
+|---|---|
+| Read | 读 AGENTS、workflow、handoff、active plan |
+| Confirm | 确认 active task、owned files、not to touch、tests |
+| Work | 只做当前 task |
+| Verify | 跑 focused verification，必要时跑 full tests |
+| Review | self-review 或交给 reviewer |
+| Save Handoff | 更新 SESSION_HANDOFF 和 handoff 快照 |
+
+---
+
+## 10. 文件作用速查
+
+| 文件 | 作用 |
+|---|---|
+| `AGENTS.md` | 所有 Agent 的根规则 |
+| `CLAUDE.md` | Claude 专用入口 |
+| `CODEX.md` | Codex 专用入口 |
+| `docs/IMPLEMENTATION_WORKFLOW.md` | 核心工作流 |
+| `docs/PROMPT_LIBRARY.md` | 完整自然语言指令库 |
+| `QUICK_PROMPTS.md` | 常用指令速查 |
+| `docs/DOCUMENT_INDEX.md` | 决定什么场景读什么文档 |
+| `docs/SESSION_HANDOFF.md` | 当前最新交接状态 |
+| `docs/handoffs/` | 历史交接快照 |
+| `docs/AGENT_ROSTER.md` | Agent 角色分工 |
+| `docs/DOC_MIGRATION_MAP.md` | 老文档到新规范的映射 |
+| `docs/DOC_CONFLICTS.md` | 新旧文档冲突 |
+| `docs/PROJECT_BASELINE.md` | 老项目现状报告 |
+| `docs/RISK_REGISTER.md` | 风险登记 |
+| `docs/DECISIONS.md` | 长期决策 |
+| `docs/specs/` | 需求/spec |
+| `docs/plans/` | implementation plan |
+| `docs/reviews/` | review 记录 |
+| `docs/retros/` | 复盘 |
+
+---
+
+## 11. 使用原则
+
+1. 老项目先接管，再优化。
+2. 新项目先建规则和目录，再写功能。
+3. 不知道就写 UNKNOWN。
+4. 不适用就写 N/A。
+5. 不要让 Agent 编造 deployment、credentials、CI、database、production 信息。
+6. 多 Agent 并行必须有 File Ownership Map。
+7. 旧 Session 结束前必须 Session Save。
+8. 新 Session 开始后必须 Session Restore。
+9. Codex 执行前必须确认 owned files。
+10. Claude review 时不能扩大需求。
+11. 高风险区域必须显式确认。
+12. 没有保存，就不要假装可以无损恢复。
+
+
+---
+
+## 12. 如何防止交接文件膨胀
+
+会膨胀，尤其在频繁 Claude ↔ Codex 切换、上下文压缩、多 task 执行时。
+
+膨胀点主要有四个：
+
+| 位置 | 膨胀原因 | 优化方式 |
+|---|---|---|
+| `docs/SESSION_HANDOFF.md` | 每次交接都追加历史 | 只保留当前状态，覆盖更新 |
+| `docs/handoffs/*.md` | 每次都复制完整上下文 | 每个快照只写短摘要 |
+| `active plan` | task 状态反复堆叠说明 | 只维护 Task Status Table |
+| 测试/CI 输出 | 把大日志粘进 Markdown | 大日志放到 `docs/handoffs/artifacts/` |
+
+v4 新增：
+
+```text
+docs/HANDOFF_POLICY.md
+docs/HANDOFF_INDEX.md
+docs/handoffs/artifacts/
+docs/handoffs/archive/
+```
+
+### 12.1 硬性限制
+
+| 文件 | 目标长度 | 最大长度 |
+|---|---:|---:|
+| `docs/SESSION_HANDOFF.md` | 100 - 200 行 | 300 行 |
+| `docs/handoffs/*.md` | 80 - 150 行 | 250 行 |
+| `docs/HANDOFF_INDEX.md` | 最近记录 | 超过 200 行按月归档 |
+
+### 12.2 保存 Session 时的推荐说法
+
+```text
+请执行 Session Save Handoff，但必须遵守 docs/HANDOFF_POLICY.md。
+
+要求：
+
+1. 覆盖更新 docs/SESSION_HANDOFF.md，不要追加历史。
+2. 创建一份短 handoff 快照到 docs/handoffs/。
+3. 更新 docs/HANDOFF_INDEX.md。
+4. 更新 active plan task status。
+5. 不要粘贴完整日志、完整 diff、完整 spec、完整 plan。
+6. 大输出只保存到 docs/handoffs/artifacts/ 并在 handoff 中引用路径。
+7. SESSION_HANDOFF 保持在 100-200 行，最多 300 行。
+8. 完成后不要继续写代码。
+```
+
+### 12.3 发现已经膨胀时的推荐说法
+
+```text
+请执行 Handoff Compaction。
+
+要求：
+
+1. 读取 docs/HANDOFF_POLICY.md。
+2. 重写 docs/SESSION_HANDOFF.md，只保留当前恢复所需状态。
+3. 删除旧 task 的展开细节，只保留一行引用 active plan。
+4. 把历史 handoff 记录写入 docs/HANDOFF_INDEX.md。
+5. 把长期决策移动或引用到 docs/DECISIONS.md。
+6. 把长期风险移动或引用到 docs/RISK_REGISTER.md。
+7. 把大日志、大测试输出、大 traceback 移到 docs/handoffs/artifacts/。
+8. 不要修改业务代码。
+```
+
+
+---
+
+## 13. 入口文件不会再直接覆盖
+
+v5 开始，框架包不再把 `AGENTS.md`、`CLAUDE.md`、`CODEX.md` 作为可直接覆盖的根文件提供。
+
+它们改放在：
+
+```text
+templates/target/root/AGENTS.md.template
+templates/target/root/CLAUDE.md.template
+templates/target/root/CODEX.md.template
+```
+
+如果老项目里已经有这些文件，不能覆盖。
+
+应该使用 append snippet：
+
+```text
+templates/target/root/AGENTS.append-snippet.md
+templates/target/root/CLAUDE.append-snippet.md
+templates/target/root/CODEX.append-snippet.md
+templates/target/root/README.agent-workflow-snippet.md
+```
+
+并且只追加或更新受控区块：
+
+```md
+<!-- BEGIN PROJECT_AGENT_WORKFLOW -->
+
+...framework managed content...
+
+<!-- END PROJECT_AGENT_WORKFLOW -->
+```
+
+### 13.1 老项目入口文件安全合并 Prompt
+
+```text
+请按 Entry Point Merge Policy 处理 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+
+要求：
+
+1. 如果文件不存在，才从 templates/target/root/*.template 创建。
+2. 如果文件已存在，不要覆盖。
+3. 读取已有内容，保留项目原有规则。
+4. 只追加或更新 BEGIN PROJECT_AGENT_WORKFLOW / END PROJECT_AGENT_WORKFLOW 之间的受控区块。
+5. 如果已有规则和新框架冲突，不要自行决定，写入 docs/DOC_CONFLICTS.md。
+6. 更新 docs/DOC_MIGRATION_MAP.md。
+7. 更新 docs/adoption/ENTRYPOINT_MERGE_PLAN.md。
+8. 更新 docs/SESSION_HANDOFF.md。
+```
+
+### 13.2 如果只想先看计划
+
+```text
+这个老项目可能已经有 AGENTS.md、CLAUDE.md、CODEX.md。
+
+请只生成入口文件合并计划，不要修改文件。
+
+要求：
+
+1. 读取现有 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+2. 对比 templates/target/root/*.template 和 templates/target/root/*.append-snippet.md。
+3. 生成 docs/adoption/ENTRYPOINT_MERGE_PLAN.md。
+4. 如果有冲突，写入 docs/DOC_CONFLICTS.md。
+5. 不要覆盖任何已有文件。
+6. 不要修改业务代码。
+```

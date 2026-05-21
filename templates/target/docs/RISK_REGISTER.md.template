@@ -1,0 +1,44 @@
+# Risk Register
+
+Use this file to track durable project risks.
+
+## Risk Table
+
+| ID | Risk | Area | Severity | Trigger | Mitigation | Approval Needed | Status |
+|---|---|---|---|---|---|---|---|
+| `RISK-001` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `open` |
+
+Severity values:
+
+- low
+- medium
+- high
+- critical
+
+Status values:
+
+- open
+- mitigated
+- accepted
+- deferred
+- obsolete
+
+## Risk Gate Reminder
+
+The following are high-risk by default:
+
+- credentials
+- secrets
+- tokens
+- personal data
+- regulated data
+- permissions
+- access control
+- production infrastructure
+- deployment
+- rollback behavior
+- database migrations
+- destructive operations
+- money movement
+- trading behavior
+- safety-critical behavior

@@ -1,0 +1,35 @@
+# Entry Point Merge Plan
+
+Use this file during Existing Project Adoption Mode when root entry files already exist.
+
+Do not overwrite existing entry files.
+
+## 1. Existing Entry Files
+
+| File | Exists? | Summary | Has Managed Block? | Conflict? | Action |
+|---|---|---|---|---|---|
+| `AGENTS.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `CLAUDE.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `CODEX.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| `README.md` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 2. Proposed Actions
+
+Allowed actions:
+
+- create from template because missing
+- append managed block
+- update existing managed block
+- create proposed patch only
+- no change
+- conflict requires human decision
+
+## 3. Proposed Patch
+
+Put patch or append content here if needed.
+
+## 4. Conflicts to Record
+
+| Conflict | File | Required Decision |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |

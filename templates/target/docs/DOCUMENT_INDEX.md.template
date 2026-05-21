@@ -1,0 +1,53 @@
+# Document Index
+
+This file tells agents what to read and when.
+
+Do not load all documents by default.
+
+## Always Read
+
+| Situation | Documents |
+|---|---|
+| Any non-trivial work | `AGENTS.md`, `docs/IMPLEMENTATION_WORKFLOW.md`, `docs/SESSION_HANDOFF.md`, `docs/HANDOFF_POLICY.md` |
+| Any agent/session switch | `AGENTS.md`, `docs/IMPLEMENTATION_WORKFLOW.md`, `docs/DOCUMENT_INDEX.md`, `docs/SESSION_HANDOFF.md`, `docs/HANDOFF_POLICY.md` |
+
+## Read When Planning
+
+| Situation | Documents |
+|---|---|
+| New spec or feature | active spec, `docs/PROJECT_CONTEXT.md`, `docs/RISK_REGISTER.md` |
+| Implementation plan | active spec, `docs/DECISIONS.md`, relevant docs below |
+| Plan review | active spec, active plan, `docs/RISK_REGISTER.md` |
+
+## Read by Change Type
+
+| Change Type | Documents |
+|---|---|
+| Architecture | `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` |
+| Imports, APIs, module boundaries | `docs/API_PATHS.md` |
+| Database, schema, migrations | `docs/DB_CONVENTIONS.md`, `docs/RISK_REGISTER.md` |
+| Tests, fixtures, CI test commands | `docs/TEST_CONVENTIONS.md` |
+| Deployment, Docker, systemd, infrastructure, CI | `docs/DEPLOYMENT.md`, `docs/SECURITY.md`, `docs/RISK_REGISTER.md` |
+| Security, auth, credentials, permissions, data handling | `docs/SECURITY.md`, `docs/RISK_REGISTER.md` |
+| Old project adoption | `docs/PROJECT_BASELINE.md`, `docs/DOC_MIGRATION_MAP.md`, `docs/DOC_CONFLICTS.md` |
+| Strange failures | `docs/PROJECT_BASELINE.md`, `docs/SESSION_HANDOFF.md`, `docs/HANDOFF_POLICY.md`, latest files under `docs/handoffs/`, relevant review records |
+| Final integration | active spec, active plan, `docs/reviews/`, `docs/RISK_REGISTER.md`, `docs/DECISIONS.md` |
+| Natural language prompts | `QUICK_PROMPTS.md`, `docs/PROMPT_LIBRARY.md` |
+
+## Project-Specific Additions
+
+Add project-specific entries here.
+
+| Situation | Documents |
+|---|---|
+| `<PROJECT_SPECIFIC_CASE>` | `<PROJECT_SPECIFIC_DOCS>` |
+
+| Handoff size control | `docs/HANDOFF_POLICY.md`, `docs/HANDOFF_INDEX.md` |
+
+
+## Entry Point Merge
+
+| Situation | Documents |
+|---|---|
+| Creating or updating `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, `README.md` | `docs/ENTRYPOINT_MERGE_POLICY.md`, `templates/target/root/*.template`, `templates/target/root/*.append-snippet.md` |
+| Existing project already has root agent files | `docs/ENTRYPOINT_MERGE_POLICY.md`, `docs/adoption/ENTRYPOINT_MERGE_PLAN.md`, `docs/DOC_CONFLICTS.md` |

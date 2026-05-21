@@ -1,0 +1,25 @@
+# Document Conflicts
+
+Use this file when old and new documents conflict.
+
+## Conflict Table
+
+| ID | Conflict | Files | Impact | Higher Authority Source | Required Decision | Status |
+|---|---|---|---|---|---|---|
+| `DOC-CONFLICT-001` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `open` |
+
+Status values:
+
+- open
+- resolved
+- deferred
+- obsolete
+
+## Resolution Notes
+
+### DOC-CONFLICT-001
+
+- Decision:
+- Date:
+- Decided by:
+- Follow-up:

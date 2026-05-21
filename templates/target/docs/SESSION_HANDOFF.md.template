@@ -1,0 +1,204 @@
+# Session Handoff
+
+This file is the current recovery entry point.
+
+It must always describe the latest project state for the next Claude, Codex, or other agent.
+
+Do not treat this file as historical archive. Historical snapshots belong under `docs/handoffs/`.
+
+Session save does not happen automatically. The active agent must update this file before ending, switching, or compacting.
+
+Size rule:
+
+- Target: 100 - 200 lines.
+- Maximum: 300 lines.
+- This file must be overwritten with current state, not appended forever.
+- Historical entries belong in `docs/HANDOFF_INDEX.md` and `docs/handoffs/*.md`.
+- Large logs belong in `docs/handoffs/artifacts/`.
+
+See `docs/HANDOFF_POLICY.md`.
+
+---
+
+## 1. Current Status
+
+- Project: `UNKNOWN`
+- Branch: `UNKNOWN`
+- Worktree: `UNKNOWN`
+- Base commit: `UNKNOWN`
+- Current agent: `UNKNOWN`
+- Current role: `UNKNOWN`
+- Last updated: `UNKNOWN`
+- Active mode: `UNKNOWN`
+- Active spec: `UNKNOWN`
+- Active plan: `UNKNOWN`
+- Active task: `UNKNOWN`
+- Task status: `UNKNOWN`
+
+---
+
+## 2. Original User Goal
+
+`UNKNOWN`
+
+---
+
+## 3. Documents Read This Session
+
+Keep this short. List only documents needed for recovery.
+
+| Document | Purpose |
+|---|---|
+| `UNKNOWN` | `UNKNOWN` |
+
+---
+
+## 4. Completed Work
+
+Keep only the current task-relevant summary.
+
+For completed old tasks, use one-line references such as:
+
+```text
+TASK-001 accepted. See active plan for details.
+```
+
+- `UNKNOWN`
+
+---
+
+## 5. In-Progress Work
+
+- `UNKNOWN`
+
+---
+
+## 6. Next Recommended Step
+
+Give exactly one most recommended next step.
+
+`UNKNOWN`
+
+---
+
+## 7. Files Changed
+
+List only files relevant to the current active task or unresolved handoff.
+
+| File | Change Summary | Status |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+---
+
+## 8. Files Owned by Active Task
+
+Current task may modify only these files:
+
+- `UNKNOWN`
+
+---
+
+## 9. Files Not to Touch
+
+Current task must not modify these files:
+
+- `UNKNOWN`
+
+---
+
+## 10. Commands Run
+
+Keep only recent or recovery-relevant commands. Maximum 10 rows.
+
+| Command | Result | Notes / Artifact |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+---
+
+## 11. Test Results
+
+Summarize test results. Do not paste long logs.
+
+| Test / Check | Result | Notes / Artifact |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+---
+
+## 12. Known Failures
+
+Keep only failures that block continuation.
+
+- `UNKNOWN`
+
+---
+
+## 13. Decisions Made
+
+Keep only new decisions from this session.
+
+If a decision is durable, also record it in `docs/DECISIONS.md`.
+
+- `UNKNOWN`
+
+---
+
+## 14. Open Questions
+
+- `UNKNOWN`
+
+---
+
+## 15. Risks
+
+Keep only active risks affecting continuation.
+
+If a risk is durable or high-impact, also record it in `docs/RISK_REGISTER.md`.
+
+- `UNKNOWN`
+
+---
+
+## 16. Handoff Target
+
+- Next agent: `UNKNOWN`
+- Expected role: `UNKNOWN`
+- Expected task: `UNKNOWN`
+- Reason for handoff: `UNKNOWN`
+
+---
+
+## 17. Related Handoff Snapshot
+
+- Latest snapshot: `UNKNOWN`
+- Handoff index row updated: `yes / no`
+
+---
+
+## 18. Resume Prompt
+
+```text
+Read AGENTS.md, docs/IMPLEMENTATION_WORKFLOW.md, docs/DOCUMENT_INDEX.md, docs/HANDOFF_POLICY.md, docs/SESSION_HANDOFF.md, the active spec, and the active plan.
+
+You are continuing from the current session handoff.
+
+Do not modify files yet.
+
+First confirm:
+
+1. current branch or worktree
+2. active task
+3. owned files
+4. files not to touch
+5. required verification command
+6. known failures
+7. next recommended step
+
+Then continue according to docs/IMPLEMENTATION_WORKFLOW.md.
+
+If you need to modify files outside the owned file list, stop and request a plan update.
+
+If docs/SESSION_HANDOFF.md appears bloated or contains long logs/diffs/history, stop and propose Handoff Compaction first.
+```

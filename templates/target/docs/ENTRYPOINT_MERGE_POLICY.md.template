@@ -1,0 +1,154 @@
+# Entry Point Merge Policy
+
+This policy prevents the framework from overwriting existing project entry files such as:
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `CODEX.md`
+- `README.md`
+
+These files often already contain project-specific instructions. They must be preserved.
+
+---
+
+## 1. Core Rule
+
+Never overwrite existing root entry files during Existing Project Adoption Mode.
+
+Existing files must be treated as project sources.
+
+The framework provides templates under:
+
+```text
+templates/target/root/
+```
+
+Use them only when the target file does not exist.
+
+If the target file already exists, use the corresponding append snippet instead:
+
+```text
+templates/target/root/AGENTS.append-snippet.md
+templates/target/root/CLAUDE.append-snippet.md
+templates/target/root/CODEX.append-snippet.md
+templates/target/root/README.agent-workflow-snippet.md
+```
+
+---
+
+## 2. New Project Behavior
+
+For a new project:
+
+1. If `AGENTS.md` does not exist, create it from `templates/target/root/AGENTS.md.template`.
+2. If `CLAUDE.md` does not exist, create it from `templates/target/root/CLAUDE.md.template`.
+3. If `CODEX.md` does not exist, create it from `templates/target/root/CODEX.md.template`.
+4. If any file already exists, do not overwrite it. Use the old project merge behavior for that file.
+
+---
+
+## 3. Existing Project Behavior
+
+For an old project:
+
+1. Read existing `AGENTS.md`, `CLAUDE.md`, `CODEX.md`, and `README.md` if present.
+2. Classify them in `docs/PROJECT_BASELINE.md`.
+3. Map them in `docs/DOC_MIGRATION_MAP.md`.
+4. Detect conflicts and record them in `docs/DOC_CONFLICTS.md`.
+5. Do not overwrite.
+6. Prefer appending a managed block with markers.
+7. If appending would conflict with existing instructions, create a proposed patch instead of editing.
+
+---
+
+## 4. Managed Block Markers
+
+When appending workflow instructions, use markers:
+
+```md
+<!-- BEGIN PROJECT_AGENT_WORKFLOW -->
+
+...managed workflow instructions...
+
+<!-- END PROJECT_AGENT_WORKFLOW -->
+```
+
+Rules:
+
+- If the block does not exist, append it.
+- If the block already exists, update only the content inside the block.
+- Do not edit user-owned content outside the block.
+- If existing instructions conflict with the managed block, stop and record a conflict.
+
+---
+
+## 5. Conflict Handling
+
+A conflict exists when an existing entry file says something incompatible with this framework, for example:
+
+- existing file says "implement directly" but framework requires spec -> plan
+- existing file allows deployment changes but framework requires approval
+- existing file has different test commands
+- existing file has different source-of-truth docs
+- existing file says not to use certain docs or tools
+
+Do not silently resolve conflicts.
+
+Record them in:
+
+```text
+docs/DOC_CONFLICTS.md
+```
+
+Use this format:
+
+| ID | Conflict | Files | Impact | Higher Authority Source | Required Decision | Status |
+|---|---|---|---|---|---|---|
+
+---
+
+## 6. Safe Merge Steps
+
+Use this process:
+
+1. Check whether the file exists.
+2. If missing, create from template.
+3. If present, read and summarize existing rules.
+4. Check whether a `PROJECT_AGENT_WORKFLOW` managed block already exists.
+5. If managed block exists, update only that block.
+6. If no managed block exists, append the snippet.
+7. If conflict exists, do not edit; create a proposed patch and record the conflict.
+8. Update `docs/SESSION_HANDOFF.md`.
+
+---
+
+## 7. Backup Rule
+
+Before editing an existing root entry file, either:
+
+- rely on git status / version control, or
+- create a timestamped backup under:
+
+```text
+docs/adoption/backups/YYYY-MM-DD-HHMM/
+```
+
+Never create backups containing secrets.
+
+---
+
+## 8. Prompt to Use
+
+```text
+请按 Entry Point Merge Policy 处理 AGENTS.md、CLAUDE.md、CODEX.md、README.md。
+
+要求：
+
+1. 如果文件不存在，才从 templates/target/root/*.template 创建。
+2. 如果文件已存在，不要覆盖。
+3. 读取已有内容，保留项目原有规则。
+4. 只追加或更新 BEGIN PROJECT_AGENT_WORKFLOW / END PROJECT_AGENT_WORKFLOW 之间的受控区块。
+5. 如果已有规则和新框架冲突，不要自行决定，写入 docs/DOC_CONFLICTS.md。
+6. 更新 docs/DOC_MIGRATION_MAP.md。
+7. 更新 docs/SESSION_HANDOFF.md。
+```

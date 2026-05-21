@@ -1,0 +1,74 @@
+# Project Baseline
+
+Use this file for Existing Project Adoption Mode.
+
+It records the current state of an existing project before optimization.
+
+## 1. Repository Overview
+
+- Project:
+- Main branch:
+- Primary language:
+- Framework:
+- Runtime:
+- Package manager:
+- Database:
+- Deployment:
+- CI:
+- Test framework:
+
+## 2. Verified Commands
+
+| Command | Result | Notes |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 3. Document Inventory
+
+| File | Classification | Notes |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+Classification values:
+
+- canonical
+- useful but incomplete
+- outdated
+- conflicting
+- archive candidate
+- unknown
+
+## 4. Codebase Inventory
+
+| Area | Files / Directories | Notes |
+|---|---|---|
+| Entry points | `UNKNOWN` | `UNKNOWN` |
+| Core modules | `UNKNOWN` | `UNKNOWN` |
+| Tests | `UNKNOWN` | `UNKNOWN` |
+| Config | `UNKNOWN` | `UNKNOWN` |
+| Deployment | `UNKNOWN` | `UNKNOWN` |
+| Database | `UNKNOWN` | `UNKNOWN` |
+
+## 5. Known Risks
+
+| Risk | Area | Severity | Notes |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 6. Known Broken Areas
+
+| Area | Evidence | Impact |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 7. Unknowns
+
+- `UNKNOWN`
+
+## 8. Safe First Improvements
+
+- `UNKNOWN`
+
+## 9. Deferred High-Risk Changes
+
+- `UNKNOWN`

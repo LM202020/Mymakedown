@@ -1,0 +1,43 @@
+# Deployment
+
+Use this file before changing deployment, infrastructure, Docker, systemd, CI/CD, release, rollback, or monitoring behavior.
+
+## 1. Deployment Target
+
+`UNKNOWN`
+
+## 2. Deployment Method
+
+`UNKNOWN`
+
+## 3. CI/CD
+
+| Provider | Workflow File | Notes |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 4. Runtime Services
+
+| Service | Purpose | Managed By |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 5. Environment Variables
+
+Do not store secrets in this file.
+
+| Variable | Required | Description | Secret? |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 6. Rollback
+
+`UNKNOWN`
+
+## 7. Canary / Monitoring
+
+`UNKNOWN`
+
+## 8. Risk Gate
+
+Deployment, systemd, CI/CD, production infrastructure, and rollback behavior are P3 unless explicitly classified otherwise.

@@ -1,0 +1,57 @@
+mode: warn
+
+checks:
+  secrets: true
+  handoff_size: true
+  no_overwrite: true
+  plan_placeholders: true
+  owned_files: false
+  adoption_manifest: true
+
+limits:
+  session_handoff_max_lines: 300
+  handoff_snapshot_max_lines: 250
+  handoff_index_max_rows: 200
+
+paths:
+  session_handoff: docs/SESSION_HANDOFF.md
+  handoff_index: docs/HANDOFF_INDEX.md
+  adoption_manifest: templates/FILE_ADOPTION_MANIFEST.md
+
+protected_root_files:
+  - AGENTS.md
+  - CLAUDE.md
+  - CODEX.md
+  - README.md
+
+protected_doc_files:
+  - docs/ARCHITECTURE.md
+  - docs/DEPLOYMENT.md
+  - docs/SECURITY.md
+  - docs/TEST_CONVENTIONS.md
+  - docs/API_PATHS.md
+  - docs/DB_CONVENTIONS.md
+  - docs/IMPLEMENTATION_WORKFLOW.md
+  - docs/PROMPT_LIBRARY.md
+
+placeholder_patterns:
+  - TODO
+  - TBD
+  - make sure it works
+  - implement the obvious logic
+  - similar to existing code
+  - fix later
+  - placeholder
+
+secret_patterns:
+  - API_KEY\s*=
+  - SECRET\s*=
+  - TOKEN\s*=
+  - PRIVATE_KEY
+  - BEGIN RSA PRIVATE KEY
+  - BEGIN OPENSSH PRIVATE KEY
+  - TG_TOKEN
+  - DATABASE_URL\s*=
+  - PASSWORD\s*=
+  - ACCESS_KEY
+  - SECRET_ACCESS_KEY

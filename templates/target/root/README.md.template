@@ -1,0 +1,98 @@
+# Project Agent Workflow Framework v7
+
+这是一个给 Claude、Codex、以及其他代码 Agent 使用的项目级工作流框架。
+
+v4 的重点是把“你平时要对 Agent 说的话”系统化整理成自然语言 Prompt Library，让你可以直接复制使用。
+
+## 解决的问题
+
+1. 新项目来了，让 Agent 按模板自动生成目录、文档、规则。
+2. 老项目来了，让 Agent 自动盘点现有文档、补齐缺失文档、建立新旧文档映射。
+3. 多 Agent 协作时，明确 Claude、Codex、Reviewer、Implementer、Integration Agent 的角色边界。
+4. 旧 Session 保存、新 Session 恢复、上下文压缩、Agent 切换都有固定说法。
+5. 所有非平凡代码改动都走 spec -> plan -> review -> branch/worktree -> task execution -> verification -> handoff。
+
+## 核心入口
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `CODEX.md`
+- `USAGE.md`
+- `QUICK_PROMPTS.md`
+- `docs/PROMPT_LIBRARY.md`
+- `docs/IMPLEMENTATION_WORKFLOW.md`
+- `docs/DOCUMENT_INDEX.md`
+- `docs/SESSION_HANDOFF.md`
+
+## 最推荐先看的文件
+
+1. `USAGE.md`
+2. `QUICK_PROMPTS.md`
+3. `docs/PROMPT_LIBRARY.md`
+4. `docs/IMPLEMENTATION_WORKFLOW.md`
+
+## 一句话原则
+
+```text
+旧 Session 负责保存，新 Session 负责恢复。
+老项目先接管，再优化。
+新项目先建规则，再写功能。
+Codex 执行前必须确认 owned files。
+Claude review 时不能扩大需求。
+```
+
+
+## v4 新增
+
+v4 增加了防止交接文件膨胀的机制：
+
+- `docs/HANDOFF_POLICY.md`
+- `docs/HANDOFF_INDEX.md`
+- `docs/handoffs/artifacts/`
+- `docs/handoffs/archive/`
+
+核心规则：
+
+```text
+SESSION_HANDOFF 只保留当前状态，不保存历史。
+历史快照放 handoffs。
+历史索引放 HANDOFF_INDEX。
+大日志放 artifacts。
+长期决策放 DECISIONS。
+长期风险放 RISK_REGISTER。
+```
+
+
+## v5 新增
+
+v5 修复了老项目已有 `AGENTS.md`、`CLAUDE.md`、`CODEX.md` 时可能被覆盖的问题。
+
+现在这些入口文件不再作为根文件直接提供，而是放在：
+
+```text
+templates/target/root/*.template
+templates/target/root/*.append-snippet.md
+```
+
+老项目接管时必须遵守：
+
+```text
+已存在就不覆盖。
+缺失才从 template 创建。
+已有文件只追加或更新 managed block。
+冲突写入 DOC_CONFLICTS。
+```
+
+
+## v6 新增
+
+v6 把所有目标文件统一改成模板模式，全部放在 `templates/target/`，不再直接落到项目根目录。
+
+每个文件按 `templates/FILE_ADOPTION_MANIFEST.md` 里的 `adoption_mode` 处理，确保老项目的 `README.md`、`docs/ARCHITECTURE.md`、`docs/DEPLOYMENT.md` 等都不会被覆盖。
+
+
+## v7 新增
+
+v7 增加了可选的 `optional-hooks/` 层，在 commit / push 前自动检查 secrets、handoff 膨胀、文件覆盖、plan/spec 占位符、owned files、adoption manifest。
+
+默认不启用，建议先用 `warn` 模式，稳定后再切到 `block`。

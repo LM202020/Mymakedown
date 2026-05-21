@@ -1,0 +1,55 @@
+# Spec Template
+
+Filename pattern:
+
+```text
+YYYY-MM-DD-<short-feature-name>.md
+```
+
+## 1. Title
+
+## 2. User Goal
+
+## 3. Background
+
+## 4. Requirements
+
+| ID | Requirement | Testable? | Notes |
+|---|---|---|---|
+| `REQ-001` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 5. Non-Goals
+
+- `UNKNOWN`
+
+## 6. Out of Scope
+
+- `UNKNOWN`
+
+## 7. User-Facing Behavior
+
+`UNKNOWN`
+
+## 8. Data / Security / Deployment Impact
+
+| Area | Impact | Notes |
+|---|---|---|
+| Data | `UNKNOWN` | `UNKNOWN` |
+| Security | `UNKNOWN` | `UNKNOWN` |
+| Deployment | `UNKNOWN` | `UNKNOWN` |
+| Rollback | `UNKNOWN` | `UNKNOWN` |
+
+## 9. Acceptance Criteria
+
+- `UNKNOWN`
+
+## 10. Open Questions
+
+- `UNKNOWN`
+
+## 11. Spec Review Result
+
+- Accepted / Accepted with constraints / Rejected
+- Reviewer:
+- Date:
+- Constraints:

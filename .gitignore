@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS files (cross-platform: Windows + macOS)
+.DS_Store
+Thumbs.db
+desktop.ini

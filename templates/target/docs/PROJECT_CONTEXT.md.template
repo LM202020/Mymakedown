@@ -1,0 +1,52 @@
+# Project Context
+
+This file records stable project context.
+
+Do not use this file for temporary task status. Use `docs/SESSION_HANDOFF.md` for current status.
+
+## 1. Project Name
+
+`UNKNOWN`
+
+## 2. Purpose
+
+`UNKNOWN`
+
+## 3. Users / Stakeholders
+
+`UNKNOWN`
+
+## 4. Goals
+
+- `UNKNOWN`
+
+## 5. Non-Goals
+
+- `UNKNOWN`
+
+## 6. Primary Use Cases
+
+- `UNKNOWN`
+
+## 7. Constraints
+
+| Constraint | Details |
+|---|---|
+| Runtime | `UNKNOWN` |
+| Deployment | `UNKNOWN` |
+| Data | `UNKNOWN` |
+| Security | `UNKNOWN` |
+| Cost | `UNKNOWN` |
+| Performance | `UNKNOWN` |
+
+## 8. External Dependencies
+
+| Dependency | Purpose | Risk |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 9. Operating Assumptions
+
+| Assumption | Evidence | Confidence |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |

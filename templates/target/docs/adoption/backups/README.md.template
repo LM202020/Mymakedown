@@ -1,0 +1,7 @@
+# Adoption Backups
+
+Optional location for timestamped backups of root entry files before safe merge.
+
+Do not store secrets here.
+
+Prefer git version control when available.

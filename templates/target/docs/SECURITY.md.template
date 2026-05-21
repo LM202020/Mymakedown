@@ -1,0 +1,50 @@
+# Security
+
+Use this file before changing authentication, authorization, credentials, tokens, permissions, personal data, or sensitive operations.
+
+## 1. Security Model
+
+`UNKNOWN`
+
+## 2. Authentication
+
+`UNKNOWN`
+
+## 3. Authorization
+
+`UNKNOWN`
+
+## 4. Secrets Policy
+
+- Do not commit secrets.
+- Do not print secrets in logs.
+- Do not copy secrets into docs.
+- Use placeholders for secret names, not values.
+
+## 5. Data Handling
+
+| Data Type | Location | Sensitivity | Retention |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 6. Risk Gates
+
+Changes require explicit approval when touching:
+
+- credentials
+- secrets
+- tokens
+- authentication
+- authorization
+- permissions
+- personal data
+- regulated data
+- production access
+- destructive operations
+- payments, trading, or money movement
+
+## 7. Known Security Risks
+
+| Risk | Severity | Mitigation | Status |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |

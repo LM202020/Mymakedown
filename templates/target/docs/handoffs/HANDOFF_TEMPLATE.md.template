@@ -1,0 +1,129 @@
+# Handoff Snapshot
+
+Filename pattern:
+
+```text
+YYYY-MM-DD-HHMM-<from-agent>-to-<to-agent>-<task-or-reason>.md
+```
+
+Example:
+
+```text
+2026-05-20-1430-claude-to-codex-task-02.md
+```
+
+Size rule:
+
+- Target: 80 - 150 lines.
+- Maximum: 250 lines.
+- Do not paste full logs, full diffs, full spec, full plan, or long tracebacks.
+- Put large outputs in `docs/handoffs/artifacts/` and reference the path.
+- Add one row to `docs/HANDOFF_INDEX.md`.
+
+---
+
+## 1. Summary
+
+- From agent:
+- To agent:
+- From role:
+- To role:
+- Date/time:
+- Project:
+- Branch:
+- Worktree:
+- Active spec:
+- Active plan:
+- Active task:
+- Reason for handoff:
+
+---
+
+## 2. What Was Requested
+
+Short summary only.
+
+---
+
+## 3. What Was Read
+
+List only recovery-relevant sources.
+
+| Source | Why it was read |
+|---|---|
+
+---
+
+## 4. What Was Changed
+
+List only this session's relevant changes.
+
+| File | Change Summary |
+|---|---|
+
+---
+
+## 5. What Was Tested
+
+Do not paste long output.
+
+| Command | Result | Notes / Artifact |
+|---|---|---|
+
+---
+
+## 6. What Failed
+
+Summarize only active blockers.
+
+---
+
+## 7. Decisions Made
+
+Only new decisions from this session.
+
+Durable decisions must be moved to `docs/DECISIONS.md`.
+
+---
+
+## 8. Current Active Task
+
+- Task ID:
+- Task title:
+- Status:
+- Owned files:
+- Files not to touch:
+- Verification command:
+- Acceptance criteria:
+
+---
+
+## 9. Risks
+
+Only risks affecting continuation.
+
+Durable risks must be moved to `docs/RISK_REGISTER.md`.
+
+---
+
+## 10. Open Questions
+
+---
+
+## 11. Next Recommended Step
+
+Give exactly one next step.
+
+---
+
+## 12. Resume Prompt
+
+```text
+Read AGENTS.md, docs/IMPLEMENTATION_WORKFLOW.md, docs/DOCUMENT_INDEX.md, docs/HANDOFF_POLICY.md, docs/SESSION_HANDOFF.md, the active spec, and the active plan.
+
+Continue from the handoff.
+
+Do not modify files until you confirm the active task, owned files, files not to touch, required tests, known failures, and next recommended step.
+
+Do not expand scope. Do not paste this handoff back into SESSION_HANDOFF.
+```

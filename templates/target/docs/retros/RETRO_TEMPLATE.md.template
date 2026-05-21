@@ -1,0 +1,31 @@
+# Retro Template
+
+Filename pattern:
+
+```text
+YYYY-MM-DD-<feature-or-change>-retro.md
+```
+
+## 1. Summary
+
+## 2. What Changed
+
+## 3. What Went Well
+
+## 4. What Was Difficult
+
+## 5. Plan Deviations
+
+| Deviation | Reason | Impact | Follow-up |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 6. Bugs or Regressions Found
+
+## 7. Process Improvements
+
+## 8. Documentation Updates Needed
+
+## 9. Follow-Up Tasks
+
+## 10. Final Status

@@ -1,0 +1,138 @@
+# Agent Roster
+
+This file defines roles for Claude, Codex, and other agents.
+
+The agent name and the role are separate.
+
+For example, Claude can act as Planner or Reviewer; Codex can act as Implementer or Fixer.
+
+---
+
+## 1. Lead Agent
+
+Responsible for:
+
+- selecting the correct workflow mode
+- maintaining the active plan
+- assigning tasks
+- enforcing file ownership
+- reviewing subagent output
+- updating `docs/SESSION_HANDOFF.md`
+
+Only the lead agent may mark a task complete.
+
+---
+
+## 2. Planner Agent
+
+Best for:
+
+- spec review
+- architecture review
+- implementation plan
+- risk analysis
+- task decomposition
+
+Must not modify code unless explicitly assigned.
+
+---
+
+## 3. Implementer Agent
+
+Best for:
+
+- focused code changes
+- test-first implementation
+- local verification
+- small refactors inside owned files
+
+Must not modify files outside assigned ownership.
+
+---
+
+## 4. Reviewer Agent
+
+Best for:
+
+- spec compliance review
+- code quality review
+- test adequacy review
+- risk review
+
+Must not rewrite code directly unless assigned a fix task.
+
+---
+
+## 5. Integration Agent
+
+Best for:
+
+- full diff review
+- resolving integration conflicts
+- final verification
+- PR summary
+- release notes
+- handoff update
+
+---
+
+## 6. Documentation Agent
+
+Best for:
+
+- updating docs
+- creating migration maps
+- syncing old and new documentation
+- writing retros
+
+Must not change application behavior.
+
+---
+
+## 7. Recommended Claude / Codex Split
+
+Claude is preferred for:
+
+- spec review
+- architecture reasoning
+- implementation plan review
+- risk review
+- documentation alignment
+- session handoff summarization
+- old project adoption reports
+
+Codex is preferred for:
+
+- repository-aware implementation
+- diff-based coding
+- test execution
+- focused refactors
+- CI-oriented fixes
+- file-level changes
+
+Either agent may perform any role if explicitly assigned, but the active role must be recorded in `docs/SESSION_HANDOFF.md`.
+
+---
+
+## 8. Agent Output Contract
+
+Every agent must end non-trivial work with:
+
+```md
+## Agent Output
+
+- Role:
+- Task ID:
+- Summary:
+- Files changed:
+- Files intentionally not changed:
+- Tests added or changed:
+- Commands run:
+- Results:
+- Known failures:
+- Risks:
+- Deviations from plan:
+- Required follow-up:
+- Suggested next agent:
+- Handoff updated: yes / no
+```

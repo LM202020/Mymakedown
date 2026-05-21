@@ -1,0 +1,37 @@
+# Database Conventions
+
+Use this file before changing schema, queries, migrations, seed data, or data retention behavior.
+
+## 1. Database
+
+- Type: `UNKNOWN`
+- Connection management: `UNKNOWN`
+- Migration tool: `UNKNOWN`
+
+## 2. Migration Rules
+
+- Do not create migrations without explicit plan approval.
+- Migrations must include rollback or recovery notes.
+- Data-destructive changes require explicit approval.
+- Production migration behavior must be documented before execution.
+
+## 3. Naming Conventions
+
+| Item | Convention |
+|---|---|
+| Tables | `UNKNOWN` |
+| Columns | `UNKNOWN` |
+| Indexes | `UNKNOWN` |
+| Foreign keys | `UNKNOWN` |
+
+## 4. Query Rules
+
+`UNKNOWN`
+
+## 5. Backup / Restore
+
+`UNKNOWN`
+
+## 6. Risk Gates
+
+Any change touching production data, data deletion, or irreversible migration is P3 High Risk.

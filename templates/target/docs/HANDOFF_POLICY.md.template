@@ -1,0 +1,208 @@
+# Handoff Policy：Session / Agent 交接瘦身规则
+
+本文件规定如何避免 `SESSION_HANDOFF.md`、`docs/handoffs/`、active plan 因频繁交接而不断膨胀。
+
+核心原则：
+
+```text
+当前状态短，历史快照瘦，详细日志外置，长期结论沉淀，旧快照归档。
+```
+
+---
+
+## 1. 文件职责边界
+
+| 文件 | 职责 | 是否允许无限增长 |
+|---|---|---|
+| `docs/SESSION_HANDOFF.md` | 当前恢复入口，只保留最新状态 | 不允许 |
+| `docs/HANDOFF_INDEX.md` | 历史交接索引，只保留一行摘要 | 有上限，按月归档 |
+| `docs/handoffs/*.md` | 单次交接快照 | 每个文件有长度上限 |
+| `docs/plans/*.md` | active plan 和 task status | 不记录聊天历史 |
+| `docs/DECISIONS.md` | 长期决策 | 可增长，但要结构化 |
+| `docs/RISK_REGISTER.md` | 长期风险 | 可增长，但要结构化 |
+| `docs/reviews/*.md` | review 记录 | 按 review 单独存放 |
+| `docs/retros/*.md` | 复盘 | 按变更单独存放 |
+
+---
+
+## 2. 大小限制
+
+| 文件 | 目标长度 | 最大长度 | 超过后动作 |
+|---|---:|---:|---|
+| `docs/SESSION_HANDOFF.md` | 100 - 200 行 | 300 行 | 执行 Handoff Compaction |
+| `docs/handoffs/*.md` | 80 - 150 行 | 250 行 | 摘要化并把大内容外置 |
+| `docs/HANDOFF_INDEX.md` | 最近记录 | 200 行 | 按月归档到 `docs/handoffs/archive/` |
+| `Commands Run` 表 | 最近关键命令 | 10 行 | 旧命令移出或只留摘要 |
+
+---
+
+## 3. 禁止直接写入交接文件的内容
+
+以下内容不应直接写入 `SESSION_HANDOFF.md` 或 handoff 快照：
+
+- 完整聊天记录
+- 完整 diff
+- 完整测试日志
+- 完整 CI 输出
+- 超过 30 行的 traceback
+- 完整 spec
+- 完整 implementation plan
+- 大段代码
+- secrets、tokens、credentials、`.env` 内容
+- 与恢复无关的分析过程
+- 已经沉淀到 `DECISIONS.md` 的长期决策全文
+- 已经沉淀到 `RISK_REGISTER.md` 的长期风险全文
+
+---
+
+## 4. 大内容怎么保存
+
+用引用代替粘贴。
+
+推荐格式：
+
+```md
+- Active spec: `docs/specs/2026-05-20-feature.md`
+- Active plan: `docs/plans/2026-05-20-feature-plan.md`
+- Review record: `docs/reviews/2026-05-20-task-02-review.md`
+- Full log: `docs/handoffs/artifacts/2026-05-20-task-02-pytest.log`
+- Diff: use `git diff` against base branch
+```
+
+大日志、大 CI 输出、大 traceback 放到：
+
+```text
+docs/handoffs/artifacts/
+```
+
+---
+
+## 5. Handoff Index
+
+每次创建 handoff 快照时，都应该追加一行到 `docs/HANDOFF_INDEX.md`。
+
+不要在 `SESSION_HANDOFF.md` 里保存所有历史。
+
+索引格式：
+
+```md
+| Time | From -> To | Reason | Active Task | Snapshot | Status |
+|---|---|---|---|---|---|
+| 2026-05-20 14:30 | Claude -> Codex | implementation | TASK-02 | docs/handoffs/2026-05-20-1430-claude-to-codex-task-02.md | done |
+```
+
+当索引超过 200 行时，按月归档到：
+
+```text
+docs/handoffs/archive/YYYY-MM-HANDOFF_INDEX.md
+```
+
+---
+
+## 6. 滚动摘要策略
+
+交接文件只保留三层信息。
+
+### 6.1 Current State
+
+必须保留：
+
+- active task
+- owned files
+- files not to touch
+- required verification command
+- known failures
+- next recommended step
+
+### 6.2 Current Task Summary
+
+只保留当前 task 相关的完成情况。
+
+已经完成并 accepted 的旧 task，不要展开，只写：
+
+```md
+- TASK-001: accepted. See active plan for details.
+```
+
+### 6.3 Long-Term Memory
+
+长期信息不要堆在 handoff，应该沉淀到：
+
+| 信息 | 存放位置 |
+|---|---|
+| 长期决策 | `docs/DECISIONS.md` |
+| 长期风险 | `docs/RISK_REGISTER.md` |
+| 文档冲突 | `docs/DOC_CONFLICTS.md` |
+| 老文档映射 | `docs/DOC_MIGRATION_MAP.md` |
+| review 结果 | `docs/reviews/*.md` |
+| 复盘 | `docs/retros/*.md` |
+
+---
+
+## 7. Handoff Compaction 触发条件
+
+出现任一条件时，必须压缩交接文件：
+
+- `docs/SESSION_HANDOFF.md` 超过 300 行
+- 单个 handoff 快照超过 250 行
+- `Commands Run` 超过 10 条
+- `Files Changed` 包含多个已完成 task 的旧文件
+- `Completed Work` 开始复述历史过程
+- handoff 中粘贴了长日志、长 diff、长 traceback
+- 新 Agent 需要读过多历史才能恢复
+
+---
+
+## 8. Handoff Compaction 做什么
+
+执行压缩时：
+
+1. 保留当前 active task 的必要恢复信息。
+2. 删除旧 task 的展开细节。
+3. 把旧 task 状态移到 active plan 的 Task Status Table。
+4. 把长期决策移到 `DECISIONS.md`。
+5. 把长期风险移到 `RISK_REGISTER.md`。
+6. 把历史交接记录写入 `HANDOFF_INDEX.md`。
+7. 如果有大日志，移动到 artifacts 并在 handoff 中引用路径。
+8. 重写 `SESSION_HANDOFF.md` 为短版当前状态。
+
+---
+
+## 9. Session Save 时的瘦身规则
+
+执行 Session Save Handoff 时：
+
+- 覆盖更新 `docs/SESSION_HANDOFF.md`，不要追加历史。
+- 创建一份短快照到 `docs/handoffs/`。
+- 更新 `docs/HANDOFF_INDEX.md`。
+- 更新 active plan 的 task status。
+- 不复制完整 spec。
+- 不复制完整 plan。
+- 不复制完整日志。
+- 不复制完整 diff。
+- 只写恢复所需的信息。
+
+---
+
+## 10. Session Restore 时的瘦身规则
+
+执行 Session Restore 时：
+
+- 先读 `SESSION_HANDOFF.md`。
+- 只在需要时读最近的 handoff 快照。
+- 不要默认读取所有 `docs/handoffs/*.md`。
+- 不要把历史快照重新复制回 `SESSION_HANDOFF.md`。
+- 如果发现 handoff 过大，先建议执行 Handoff Compaction。
+
+---
+
+## 11. 多 Agent 并行时
+
+多 Agent 不要同时编辑 `docs/SESSION_HANDOFF.md`。
+
+规则：
+
+1. Lead Agent 负责更新 `SESSION_HANDOFF.md`。
+2. 子 Agent 只输出 Agent Output Contract。
+3. Lead Agent 汇总子 Agent 结果后再写 handoff。
+4. 如果多个 Agent 必须同时产出记录，各自写入独立 `docs/handoffs/*.md` 快照，再由 Lead Agent 更新主 handoff。

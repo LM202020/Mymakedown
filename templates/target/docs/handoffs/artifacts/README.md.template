@@ -1,0 +1,11 @@
+# Handoff Artifacts
+
+Put large logs, command outputs, CI excerpts, or diagnostic artifacts here.
+
+Do not paste large outputs directly into `docs/SESSION_HANDOFF.md` or handoff snapshots.
+
+Recommended filename pattern:
+
+```text
+YYYY-MM-DD-HHMM-<task>-<command-or-topic>.log
+```

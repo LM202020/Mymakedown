@@ -1,0 +1,8 @@
+# Normalize line endings: store LF in the repo, check out LF on every platform.
+# Without this, Windows may commit CRLF and the bash scripts/hooks break on macOS.
+* text=auto eol=lf
+
+# Shell scripts and git hooks must stay LF.
+*.sh text eol=lf
+optional-hooks/git-hooks/pre-commit text eol=lf
+optional-hooks/git-hooks/pre-push text eol=lf

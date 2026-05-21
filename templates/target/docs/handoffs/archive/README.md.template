@@ -1,0 +1,11 @@
+# Handoff Archive
+
+Use this directory to archive old handoff indexes or old handoff snapshots when they are no longer needed for day-to-day recovery.
+
+Recommended monthly index archive pattern:
+
+```text
+YYYY-MM-HANDOFF_INDEX.md
+```
+
+Do not delete archives automatically unless project policy explicitly allows it.

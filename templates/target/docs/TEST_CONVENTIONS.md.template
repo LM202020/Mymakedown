@@ -1,0 +1,41 @@
+# Test Conventions
+
+Use this file before adding or changing tests.
+
+## 1. Test Commands
+
+| Scope | Command | Notes |
+|---|---|---|
+| Focused | `<FOCUSED_TEST_COMMAND>` | `UNKNOWN` |
+| Full | `<FULL_TEST_COMMAND>` | `UNKNOWN` |
+| Lint / typecheck | `<QUALITY_COMMAND>` | `UNKNOWN` |
+| Build | `<BUILD_COMMAND>` | `UNKNOWN` |
+
+## 2. Test Layout
+
+| Test Type | Location |
+|---|---|
+| Unit | `UNKNOWN` |
+| Integration | `UNKNOWN` |
+| E2E | `UNKNOWN` |
+| Fixtures | `UNKNOWN` |
+
+## 3. Test-First Rule
+
+For behavior changes, write or update the failing test first when practical.
+
+If a red test is not practical, explain why in the implementation plan.
+
+## 4. Fixtures
+
+`UNKNOWN`
+
+## 5. External Services
+
+Tests must not call production services unless explicitly approved.
+
+## 6. Known Pre-Existing Failures
+
+| Test | Failure | Status |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |

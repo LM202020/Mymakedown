@@ -1,0 +1,29 @@
+# API Paths and Module Boundaries
+
+Use this file before changing imports, public APIs, module boundaries, route handlers, or package layout.
+
+## 1. Public APIs
+
+| API | Location | Owner | Compatibility Notes |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 2. Internal Module Boundaries
+
+| Module | Responsibility | Allowed Dependencies | Forbidden Dependencies |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 3. Import Rules
+
+- `UNKNOWN`
+
+## 4. Route / Endpoint Map
+
+| Endpoint | Handler | Auth | Notes |
+|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 5. Compatibility Requirements
+
+`UNKNOWN`

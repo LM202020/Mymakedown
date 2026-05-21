@@ -1,0 +1,114 @@
+# Implementation Plan Template
+
+Filename pattern:
+
+```text
+YYYY-MM-DD-<short-feature-name>-plan.md
+```
+
+## 1. Goal
+
+## 2. Source Map
+
+| Source | Section / Lines | Used For |
+|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 3. Architecture / Approach
+
+## 4. Requirement Mapping
+
+| Requirement | Implementation Task | Verification Task | Deferred / Out of Scope |
+|---|---|---|---|
+| `REQ-001` | `TASK-001` | `VERIFY-001` | `UNKNOWN` |
+
+## 5. File Ownership Map
+
+| Task ID | Files to Create | Files to Modify | Files to Test | Files Out of Scope |
+|---|---|---|---|---|
+| `TASK-001` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 6. Task Dependency Graph
+
+| Task ID | Dependency Type | Depends On | Parallel Safe? | Notes |
+|---|---|---|---|---|
+| `TASK-001` | serial / parallel-safe / blocked | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 7. Task Status Table
+
+| Task ID | Title | Owner | Status | Files Owned | Depends On | Verification | Review Status |
+|---|---|---|---|---|---|---|---|
+| `TASK-001` | `UNKNOWN` | `UNKNOWN` | not started | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | not reviewed |
+
+Allowed status values:
+
+- not started
+- in progress
+- blocked
+- implemented
+- verification failed
+- under review
+- needs revision
+- accepted
+- deferred
+
+## 8. Task Plan
+
+### TASK-001 - Title
+
+- Objective:
+- Exact files owned:
+- Files not to touch:
+- Red test to write first:
+- Minimal implementation steps:
+- Refactor / cleanup boundary:
+- Focused verification command:
+- Expected output or observable result:
+- Acceptance criteria:
+- Review gates:
+- Commit message suggestion:
+
+## 9. Verification Plan
+
+| Check | Command | Required Before PR | Required Before Merge | Notes |
+|---|---|---|---|---|
+| Focused tests | `<FOCUSED_TEST_COMMAND>` | yes | yes | `UNKNOWN` |
+| Full tests | `<FULL_TEST_COMMAND>` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| Lint / typecheck | `<QUALITY_COMMAND>` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| Build | `<BUILD_COMMAND>` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+| Manual QA | `N/A` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## 10. Risk Gates
+
+| Risk Area | Touched? | Required Approval | Notes |
+|---|---|---|---|
+| Credentials / secrets | no | N/A | |
+| Personal / regulated data | no | N/A | |
+| Payments / trading | no | N/A | |
+| Production infrastructure | no | N/A | |
+| Deployment / rollback | no | N/A | |
+| Data model / migrations | no | N/A | |
+| Permissions / access control | no | N/A | |
+| Destructive operations | no | N/A | |
+
+## 11. Rollback / Recovery Plan
+
+## 12. Out-of-Scope Items
+
+## 13. Deferred Items
+
+## 14. Handoff Plan
+
+- Expected agent switches:
+- Required handoff points:
+- Active task ownership rules:
+
+## 15. No Placeholder Check
+
+Confirm that this plan contains no unresolved:
+
+- TODO
+- TBD
+- vague implementation instructions
+- unverified commands
+- unresolved architecture choices

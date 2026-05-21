@@ -1,0 +1,13 @@
+# Archive
+
+Use this directory for old documents that are no longer canonical but should not be deleted.
+
+Do not move documents here automatically.
+
+A document can be archived only after:
+
+1. it is listed in `docs/DOC_MIGRATION_MAP.md`
+2. conflicts are resolved or marked deferred
+3. a human or lead agent approves the archive action
+
+Archived documents should preserve their original filenames when possible.

@@ -1,0 +1,85 @@
+# Project Agent Workflow Template v7
+
+Use this framework to initialize or adopt a project for multi-agent development.
+
+## What This Template Provides
+
+- project-level agent rules
+- implementation workflow
+- new project bootstrap mode
+- existing project adoption mode
+- existing project optimization mode
+- old document migration mapping
+- document authority order
+- multi-agent role definitions
+- session save / restore / compaction process
+- handoff size control and archive policy
+- natural language prompt library
+- implementation plan template
+- review template
+- retro template
+
+## Generated Project Structure
+
+```text
+.
+├── README.md
+├── USAGE.md
+├── QUICK_PROMPTS.md
+├── PROJECT_AGENT_WORKFLOW_TEMPLATE.md
+└── docs/
+    ├── IMPLEMENTATION_WORKFLOW.md
+    ├── HANDOFF_POLICY.md
+    ├── HANDOFF_INDEX.md
+    ├── PROMPT_LIBRARY.md
+    ├── PROJECT_CONTEXT.md
+    ├── PROJECT_BASELINE.md
+    ├── DOCUMENT_INDEX.md
+    ├── DOC_MIGRATION_MAP.md
+    ├── DOC_CONFLICTS.md
+    ├── ARCHITECTURE.md
+    ├── API_PATHS.md
+    ├── DB_CONVENTIONS.md
+    ├── TEST_CONVENTIONS.md
+    ├── DEPLOYMENT.md
+    ├── SECURITY.md
+    ├── RISK_REGISTER.md
+    ├── DECISIONS.md
+    ├── SESSION_HANDOFF.md
+    ├── AGENT_ROSTER.md
+    ├── specs/
+    ├── plans/
+    ├── reviews/
+    ├── handoffs/
+    ├── retros/
+    └── archive/
+```
+
+## Minimum Small-Project Structure
+
+```text
+AGENTS.md
+docs/IMPLEMENTATION_WORKFLOW.md
+docs/DOCUMENT_INDEX.md
+docs/SESSION_HANDOFF.md
+docs/PROMPT_LIBRARY.md
+docs/specs/
+docs/plans/
+docs/handoffs/
+```
+
+Do not delete the full templates; mark unused areas as `N/A`.
+
+
+## Root Entry Files
+
+Root entry files are stored as templates to prevent overwriting old projects:
+
+```text
+templates/target/root/AGENTS.md.template
+templates/target/root/CLAUDE.md.template
+templates/target/root/CODEX.md.template
+templates/target/root/*.append-snippet.md
+```
+
+Use `docs/ENTRYPOINT_MERGE_POLICY.md` before creating or modifying root entry files.

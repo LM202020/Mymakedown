@@ -1,0 +1,22 @@
+# Decisions
+
+Use this file for durable decisions that future agents must not casually reverse.
+
+## Decision Log
+
+| ID | Date | Decision | Context | Alternatives Considered | Owner | Reversible? |
+|---|---|---|---|---|---|---|
+| `DEC-001` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
+
+## Decision Template
+
+### DEC-XXX - Title
+
+- Date:
+- Decision:
+- Context:
+- Alternatives considered:
+- Why this decision:
+- Consequences:
+- Reversible:
+- Owner:

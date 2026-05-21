@@ -1,0 +1,19 @@
+# Handoff Index
+
+This file indexes handoff snapshots.
+
+Do not put full handoff contents here.
+
+When creating a handoff snapshot under `docs/handoffs/`, append one row here.
+
+If this file grows beyond 200 rows, archive older rows by month under:
+
+```text
+docs/handoffs/archive/YYYY-MM-HANDOFF_INDEX.md
+```
+
+## Index
+
+| Time | From -> To | Reason | Active Task | Snapshot | Status |
+|---|---|---|---|---|---|
+| `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` |
