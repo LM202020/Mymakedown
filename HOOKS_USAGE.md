@@ -23,6 +23,8 @@ Hooks 用来自动检查 Agent 常犯的明显错误：
 bash optional-hooks/install-hooks.sh
 ```
 
+> hooks 安装在 `.git/hooks/`，**不随仓库同步**。每次在新机器上 clone(包括从 Windows 换到 macOS)后，都要在仓库根目录重新跑一次上面的安装命令。git 的 local 身份(`user.name`/`user.email`)同理也是每个 clone 单独配置。
+
 ### Windows 说明
 
 安装脚本和 git hooks 是 bash 脚本，Windows 上需通过 **Git Bash**(Git for Windows 自带)运行。
