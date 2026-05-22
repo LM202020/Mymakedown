@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 if command -v python3 >/dev/null 2>&1; then PY=python3; else PY=python; fi
-"$PY" optional-hooks/scripts/check_secrets.py
-"$PY" optional-hooks/scripts/check_handoff_size.py
-"$PY" optional-hooks/scripts/check_no_overwrite.py
-"$PY" optional-hooks/scripts/check_plan_placeholders.py
-"$PY" optional-hooks/scripts/check_adoption_manifest.py
+"$PY" optional-hooks/scripts/run_all_checks.py

@@ -3,12 +3,17 @@
 ```text
 project_agent_workflow_framework_v7/
 ├── README.md
+├── AGENTS.md
+├── CLAUDE.md
+├── CODEX.md
 ├── NATURAL_LANGUAGE_OVERVIEW.md
 ├── SAFE_ADOPTION_POLICY.md
 ├── INSTALL_OR_ADOPT_WORKFLOW.md
 ├── FRAMEWORK_QUICK_PROMPTS.md
 ├── HOOKS_USAGE.md
 ├── FILE_TREE.md
+├── scripts/
+│   └── check_framework_consistency.py
 ├── optional-hooks/
 │   ├── README.md
 │   ├── install-hooks.sh
