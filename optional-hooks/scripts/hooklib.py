@@ -10,6 +10,15 @@ def parse_scalar(v):
     if v in ('false','False'): return False
     try: return int(v)
     except ValueError: return v
+def strip_inline_comment(s):
+    q=None
+    for i,ch in enumerate(s):
+        if ch in ('"',"'"):
+            if q==ch: q=None
+            elif q is None: q=ch
+        elif ch=='#' and q is None and (i==0 or s[i-1] in ' \t'):
+            return s[:i].rstrip()
+    return s
 def load_config():
     cfg={'mode':'warn','checks':{},'limits':{},'paths':{},'protected_root_files':[],'protected_doc_files':[],'placeholder_patterns':[],'secret_patterns':[]}
     if not CONFIG_PATH.exists(): return cfg
@@ -17,6 +26,8 @@ def load_config():
     for raw in CONFIG_PATH.read_text(encoding='utf-8',errors='replace').splitlines():
         line=raw.rstrip(); s=line.strip()
         if not s or s.startswith('#'): continue
+        s=strip_inline_comment(s)
+        if not s: continue
         if not raw.startswith(' ') and s.endswith(':'):
             cur=s[:-1]; cfg.setdefault(cur,{}); continue
         if not raw.startswith(' ') and ':' in s:

@@ -11,7 +11,10 @@ Checks (FAIL = exit non-zero, WARN = informational):
   2. No stale `templates/root/` references (must be `templates/target/root/`).
   3. Handoff size numbers live only in HANDOFF_POLICY and hooks-config.yaml.
   4. Root entry/title docs declare the expected framework version.
-  5. (WARN) Template files not referenced by the manifest.
+  5. FILE_TREE.md and the README tree list the real top-level repo entries.
+  6. AGENTS/CLAUDE/CODEX managed blocks match their append-snippets.
+  7. FILE_TREE/README tree-root version matches EXPECTED_VERSION.
+  8. (WARN) Template files not referenced by the manifest.
 """
 from __future__ import annotations
 import re
@@ -115,8 +118,74 @@ def check_orphans():
         warns.append(f"[orphan] {r} not referenced by the manifest (intentional helper? else add a row)")
 
 
+def tree_top_entries(text: str) -> list[str]:
+    """Top-level entries from an ASCII tree (├──/└── at column 0), ignoring inline comments."""
+    out = []
+    for line in text.splitlines():
+        m = re.match(r"^(?:├──|└──)\s+([^\s#]+)", line)
+        if m:
+            out.append(m.group(1).rstrip("/"))
+    return out
+
+
+def check_file_tree():
+    actual = {p.name for p in ROOT.iterdir() if not p.name.startswith(".")}
+    for doc in (ROOT / "FILE_TREE.md", ROOT / "README.md"):
+        if not doc.is_file():
+            continue
+        listed = set(tree_top_entries(doc.read_text(encoding="utf-8", errors="replace")))
+        if not listed:
+            continue
+        for n in sorted(actual - listed):
+            fails.append(f"[file-tree] {rel(doc)} omits top-level entry `{n}` (update the tree)")
+        for n in sorted(listed - actual):
+            fails.append(f"[file-tree] {rel(doc)} lists `{n}` which no longer exists on disk")
+
+
+def _managed_block(text: str) -> str | None:
+    lines = text.splitlines()
+    begin = end = None
+    for k, line in enumerate(lines):
+        if "BEGIN PROJECT_AGENT_WORKFLOW" in line:
+            begin = k
+        if "END PROJECT_AGENT_WORKFLOW" in line:
+            end = k
+            break
+    if begin is None or end is None or end < begin:
+        return None
+    return "\n".join(lines[begin:end + 1]).strip()
+
+
+def check_block_snippet_sync():
+    base = ROOT / "templates/target/root"
+    for name in ("AGENTS", "CLAUDE", "CODEX"):
+        tmpl = base / f"{name}.md.template"
+        snip = base / f"{name}.append-snippet.md"
+        if not tmpl.is_file() or not snip.is_file():
+            fails.append(f"[block-sync] {name}: template or append-snippet missing")
+            continue
+        block = _managed_block(tmpl.read_text(encoding="utf-8", errors="replace"))
+        if block is None:
+            fails.append(f"[block-sync] {rel(tmpl)} has no PROJECT_AGENT_WORKFLOW block")
+        elif block != snip.read_text(encoding="utf-8", errors="replace").strip():
+            fails.append(f"[block-sync] {name}: managed block in {rel(tmpl)} differs from {rel(snip)}")
+
+
+def check_dir_version():
+    pat = re.compile(r"project_agent_workflow_framework_v(\d+)")
+    expected = EXPECTED_VERSION.lstrip("v")
+    for doc in (ROOT / "FILE_TREE.md", ROOT / "README.md"):
+        if not doc.is_file():
+            continue
+        for i, line in enumerate(doc.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+            m = pat.search(line)
+            if m and m.group(1) != expected:
+                fails.append(f"[version] {rel(doc)}:{i} tree root declares v{m.group(1)} but expected {EXPECTED_VERSION}")
+
+
 def main() -> int:
-    for fn in (check_manifest_refs, check_stale_paths, check_size_single_source, check_version, check_orphans):
+    for fn in (check_manifest_refs, check_stale_paths, check_size_single_source, check_version,
+               check_orphans, check_file_tree, check_block_snippet_sync, check_dir_version):
         fn()
     for w in warns:
         print("WARN " + w)

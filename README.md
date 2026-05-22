@@ -30,12 +30,16 @@
 ```text
 project_agent_workflow_framework_v7/
 ├── README.md                     # 本文件
+├── AGENTS.md                     # 维护本仓库的 Agent 总入口
+├── CLAUDE.md                     # Claude 维护本仓库的说明
+├── CODEX.md                      # Codex 维护本仓库的说明
 ├── NATURAL_LANGUAGE_OVERVIEW.md  # 自然语言完整说明
 ├── SAFE_ADOPTION_POLICY.md       # 全文件安全采用策略
 ├── INSTALL_OR_ADOPT_WORKFLOW.md  # 安装 / 接管 / dry-run 指令
 ├── FRAMEWORK_QUICK_PROMPTS.md    # 常用 Prompt 速查
 ├── HOOKS_USAGE.md                # Optional Hooks 使用说明
 ├── FILE_TREE.md
+├── scripts/                      # 框架自检脚本（check_framework_consistency.py）
 ├── templates/
 │   ├── FILE_ADOPTION_MANIFEST.md # 每个目标文件如何落地的规则表
 │   └── target/                   # 所有待落地的模板内容
