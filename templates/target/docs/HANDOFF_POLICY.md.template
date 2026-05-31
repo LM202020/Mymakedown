@@ -208,3 +208,5 @@ docs/handoffs/archive/YYYY-MM-HANDOFF_INDEX.md
 2. 子 Agent 只输出 Agent Output Contract。
 3. Lead Agent 汇总子 Agent 结果后再写 handoff。
 4. 如果多个 Agent 必须同时产出记录，各自写入独立 `docs/handoffs/*.md` 快照，再由 Lead Agent 更新主 handoff。
+
+并行 commit：每个并行 Agent/session 在自己的分支或 worktree 上自动 commit，无需逐次人工确认；提交与合并的自主权规则见 `docs/IMPLEMENTATION_WORKFLOW.md` 的 Commit and Merge Autonomy（section 3.2）。

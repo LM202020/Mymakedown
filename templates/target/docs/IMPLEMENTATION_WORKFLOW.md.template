@@ -125,6 +125,33 @@ plan template) before any code is written.
 
 ---
 
+## 3.2 Commit and Merge Autonomy
+
+This framework is built for many parallel sessions. Within a session, the agent commits on its own
+branch or worktree autonomously — it does not pause for per-commit human approval. What makes this
+safe is isolation, not gatekeeping: every session owns a distinct branch/worktree with a
+non-overlapping file-ownership map (sections 11 and 14), so parallel commits never collide.
+
+Rules:
+
+1. Commit freely on your own session branch/worktree after the lane's self-review step (Light Lane
+   step 7, or the per-task review gate in the Full Lane). No separate approval is needed to commit.
+2. Do not bypass a failing required check or a `block`-mode hook to force a commit. Fix the finding
+   first; auto-commit assumes the required checks pass.
+3. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
+   independent adversarial review must pass. This is a Review Agent Protocol pass (section 20) run
+   by a different agent or model than the implementer — a cross-model / Codex review whose explicit
+   job is to find blockers, not to approve. Merge only if it reports no `blocker` and no `must fix`
+   finding. This adversarial review is mandatory; the human review and the PR/CI round trip remain
+   optional (see the Final Integration Gate, section 22).
+4. Once the adversarial review and the required checks both pass, a P1 or P2 branch may be merged
+   automatically — no human approval is needed.
+5. P3 / risk-gate changes (section 3, and the Risk Gates in the plan template) still require
+   explicit human approval before merge, in addition to the adversarial review. Autonomy applies to
+   low- and standard-risk changes only.
+
+---
+
 ## Entry Point Merge Policy
 
 Root entry files must not be overwritten in existing projects.
@@ -645,12 +672,17 @@ After all tasks:
 3. Run the required full verification suite.
 4. Run manual QA or e2e checks when user-facing or integration-heavy.
 5. Confirm docs, changelog, runbook, or migration notes are updated when applicable.
-6. Create a PR with summary, tests, risks, rollout, and rollback notes.
-7. Wait for CI.
-8. Merge only after review and required checks pass.
-9. Deploy / canary when applicable.
-10. Write a short retro if the change was non-trivial or the plan changed.
-11. Update final handoff.
+6. Create a PR with summary, tests, risks, rollout, and rollback notes, or — in autonomous
+   parallel-session mode — merge directly per the Commit and Merge Autonomy policy (section 3.2).
+7. Wait for CI when a PR/CI flow is used.
+8. Before merging, pass one independent adversarial review: a Review Agent Protocol pass
+   (section 20) by a different agent or model than the implementer — a cross-model / Codex review —
+   reporting no `blocker` and no `must fix` finding. This is mandatory for every auto-merge.
+9. Merge once that adversarial review and the required checks pass. P1 and P2 changes may then merge
+   automatically; P3 / risk-gate changes additionally require explicit human approval (section 3.2).
+10. Deploy / canary when applicable.
+11. Write a short retro if the change was non-trivial or the plan changed.
+12. Update final handoff.
 
 ---
 
