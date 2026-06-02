@@ -1,4 +1,4 @@
-# Project Agent Workflow Framework v7
+# Project Agent Workflow Framework v8
 
 这是一套给 Claude、Codex 等代码 Agent 使用的**项目级工作流框架**。它不是一份普通的 `AGENTS.md`，而是给项目安装的一整套 Agent 工作系统：项目说明书 + Agent 交通规则 + 开发流程 + 文档目录 + 多 Agent 协作协议 + Session 交接机制 + 老项目接管机制 + 防覆盖合并机制。
 
@@ -28,7 +28,7 @@
 ## 目录结构
 
 ```text
-project_agent_workflow_framework_v7/
+project_agent_workflow_framework_v8/
 ├── README.md                     # 本文件
 ├── NATURAL_LANGUAGE_OVERVIEW.md  # 自然语言完整说明
 ├── SAFE_ADOPTION_POLICY.md       # 全文件安全采用策略
@@ -89,3 +89,11 @@ python3 optional-hooks/scripts/run_all_checks.py   # Windows 上若无 python3�
 ```
 
 建议先用 `warn` 模式，稳定后再改成 `block`。详见 [`HOOKS_USAGE.md`](HOOKS_USAGE.md)。
+
+## v8 新增：并行 Session 的提交协调
+
+v8 在 Hook 层之外补全了多 Session 并行时的提交 / 合并规则（落地项目里的 `docs/IMPLEMENTATION_WORKFLOW.md` §3.2 Commit and Merge Autonomy）：
+
+- 每个 Session 在自己分支 / worktree 上自动 commit 与 push，无需逐次人工确认；合并进 base 前必须先过一轮独立对抗式评审，P3 高风险变更仍需显式人工批准。
+- spec / plan 一落地就 commit，创建前查重文件名、撞名加后缀，避免并行 Session 撞名或重复编辑。
+- 工作完成或写小结（Agent Output Contract、handoff）后自动 commit + push，让其他 Session 与 reviewer 随时看到进度。

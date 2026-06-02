@@ -1,6 +1,6 @@
 # Optional Hooks
 
-这是 Project Agent Workflow Framework v7 的可选 Hook 层。
+这是 Project Agent Workflow Framework v8 的可选 Hook 层。
 
 它默认不启用，不会自动修改你的项目。你可以在项目稳定后手动安装。
 

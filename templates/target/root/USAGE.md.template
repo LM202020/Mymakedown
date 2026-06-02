@@ -1,4 +1,4 @@
-# 使用说明：Project Agent Workflow Framework v7
+# 使用说明：Project Agent Workflow Framework v8
 
 这套框架的目标是让一个项目可以被 Claude、Codex、以及其他 Agent 稳定接手、规划、实现、评审和交接。
 
@@ -57,13 +57,13 @@ docs/PROMPT_LIBRARY.md
 如果是 zip 包，解压到项目根目录即可。
 
 ```bash
-unzip project_agent_workflow_framework_v7.zip -d .
+unzip project_agent_workflow_framework_v8.zip -d .
 ```
 
 ### 3.2 给 Agent 的常用说法
 
 ```text
-我现在有一个新项目，还有这套 Project Agent Workflow Framework v7。
+我现在有一个新项目，还有这套 Project Agent Workflow Framework v8。
 
 请按 New Project Bootstrap Mode 初始化这个项目。
 
@@ -113,7 +113,7 @@ docs/handoffs/
 ### 4.1 给 Agent 的常用说法
 
 ```text
-我现在有一个老项目，还有这套 Project Agent Workflow Framework v7。
+我现在有一个老项目，还有这套 Project Agent Workflow Framework v8。
 
 请按 Existing Project Adoption Mode 接管这个项目。
 

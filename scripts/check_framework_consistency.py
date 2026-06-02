@@ -19,7 +19,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-EXPECTED_VERSION = "v7"  # bump when cutting a new framework version
+EXPECTED_VERSION = "v8"  # bump when cutting a new framework version
 
 MANIFEST = ROOT / "templates/FILE_ADOPTION_MANIFEST.md"
 SIZE_SOURCE = ROOT / "templates/target/docs/HANDOFF_POLICY.md.template"

@@ -31,7 +31,7 @@ Claude-specific notes: `CLAUDE.md`. Codex-specific notes: `CODEX.md`.
    `templates/target/docs/HANDOFF_POLICY.md.template` (human source) and
    `optional-hooks/config/hooks-config.yaml` (machine-enforced). Everywhere else references the
    policy — do not restate the numbers.
-5. **Version strings.** The framework version (currently `v7`) appears in root doc titles and in
+5. **Version strings.** The framework version (currently `v8`) appears in root doc titles and in
    `scripts/check_framework_consistency.py` (`EXPECTED_VERSION`). Bump them together.
 6. **Cross-platform.** Shell scripts and git hooks must stay LF (`.gitattributes` enforces this).
    Python is invoked as `python3` with a fallback to `python`; keep scripts pure-Python and
