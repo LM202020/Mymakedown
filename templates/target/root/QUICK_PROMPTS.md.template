@@ -87,6 +87,7 @@
 请执行 Session Save Handoff。
 更新 docs/SESSION_HANDOFF.md，创建 docs/handoffs/ 时间戳快照，更新 active plan task status。
 写清楚 active spec、active plan、active task、owned files、files not to touch、命令、测试、失败点、风险、下一步、Resume Prompt。
+保存完成后 commit 并 push 当前分支。
 完成保存后不要继续写代码。
 ```
 

@@ -419,6 +419,7 @@ Save Handoff
 11. 高风险区域必须显式确认。
 12. 没有保存，就不要假装可以无损恢复。
 13. 规划文档（spec/plan）落地后立即 commit；创建前先查重文件名，避免并行撞名。
+14. 工作完成或小结（Agent Output Contract、handoff）后，自动 commit + push 当前分支；push 不等于合并。
 
 
 ---

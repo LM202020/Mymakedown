@@ -612,7 +612,8 @@
 18. 如果发现新风险，也同步更新 docs/RISK_REGISTER.md。
 19. 写清楚 next recommended step，只给一个最推荐的下一步。
 20. 写清楚给下一个 Agent 的 Resume Prompt。
-21. 完成保存后，不要继续写新代码。
+21. 保存完成后，commit 并 push 当前分支（见 docs/IMPLEMENTATION_WORKFLOW.md §3.2）。
+22. 完成保存后，不要继续写新代码。
 ```
 
 ## I2. 旧 Session 保存，但 Agent 不能写文件

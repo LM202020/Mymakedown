@@ -111,7 +111,7 @@ For a small, low-risk change, usually one session and a few files. Keep these ga
    command up front.
 5. Implement the minimum within the named files only.
 6. Run the focused verification.
-7. Do one self-review pass: code quality, test adequacy, risk. Then commit.
+7. Do one self-review pass: code quality, test adequacy, risk. Then commit and push (section 3.2).
 8. Create a handoff only if you stop mid-change.
 
 Promote to the Full Lane the moment the change grows: it spans multiple modules, needs more than a
@@ -129,9 +129,10 @@ plan template) before any code is written.
 ## 3.2 Commit and Merge Autonomy
 
 This framework is built for many parallel sessions. Within a session, the agent commits on its own
-branch or worktree autonomously — it does not pause for per-commit human approval. What makes this
-safe is isolation, not gatekeeping: every session owns a distinct branch/worktree with a
-non-overlapping file-ownership map (sections 11 and 14), so parallel commits never collide.
+branch or worktree and pushes that branch to the remote autonomously — it does not pause for
+per-commit or per-push human approval. What makes this safe is isolation, not gatekeeping: every
+session owns a distinct branch/worktree with a non-overlapping file-ownership map (sections 11 and
+14), so parallel commits never collide.
 
 Rules:
 
@@ -145,17 +146,22 @@ Rules:
    the same filename or editing the same document.
 2. Commit freely on your own session branch/worktree after the lane's self-review step (Light Lane
    step 7, or the per-task review gate in the Full Lane). No separate approval is needed to commit.
-3. Do not bypass a failing required check or a `block`-mode hook to force a commit. Fix the finding
-   first; auto-commit assumes the required checks pass.
-4. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
+3. Commit and push whenever work completes or you summarize. Each time a unit of work is finished,
+   you produce an Agent Output Contract (section 19), or you save a handoff (section 15), commit the
+   work and push the current branch to its remote — no separate approval is needed. Keeping the
+   remote current is how parallel sessions and reviewers see your progress without waiting for a
+   merge. Pushing your own session branch is not merging: the merge gate below still applies.
+4. Do not bypass a failing required check or a `block`-mode hook to force a commit or push. Fix the
+   finding first; auto-commit and auto-push assume the required checks and pre-push hooks pass.
+5. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
    independent adversarial review must pass. This is a Review Agent Protocol pass (section 20) run
    by a different agent or model than the implementer — a cross-model / Codex review whose explicit
    job is to find blockers, not to approve. Merge only if it reports no `blocker` and no `must fix`
    finding. This adversarial review is mandatory; the human review and the PR/CI round trip remain
    optional (see the Final Integration Gate, section 22).
-4. Once the adversarial review and the required checks both pass, a P1 or P2 branch may be merged
+6. Once the adversarial review and the required checks both pass, a P1 or P2 branch may be merged
    automatically — no human approval is needed.
-5. P3 / risk-gate changes (section 3, and the Risk Gates in the plan template) still require
+7. P3 / risk-gate changes (section 3, and the Risk Gates in the plan template) still require
    explicit human approval before merge, in addition to the adversarial review. Autonomy applies to
    low- and standard-risk changes only.
 
@@ -538,6 +544,8 @@ The handoff must include:
 - next recommended step
 - resume prompt
 
+After updating the handoff, commit and push the current branch (section 3.2).
+
 After saving handoff, do not continue writing code unless explicitly instructed.
 
 ---
@@ -632,6 +640,7 @@ Every agent must end non-trivial work with:
 - Required follow-up:
 - Suggested next agent:
 - Handoff updated: yes / no
+- Committed and pushed: yes / no
 
 ---
 
