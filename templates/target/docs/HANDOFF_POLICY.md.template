@@ -210,3 +210,5 @@ docs/handoffs/archive/YYYY-MM-HANDOFF_INDEX.md
 4. 如果多个 Agent 必须同时产出记录，各自写入独立 `docs/handoffs/*.md` 快照，再由 Lead Agent 更新主 handoff。
 
 并行 commit：每个并行 Agent/session 在自己的分支或 worktree 上自动 commit，无需逐次人工确认；提交与合并的自主权规则见 `docs/IMPLEMENTATION_WORKFLOW.md` 的 Commit and Merge Autonomy（section 3.2）。
+
+规划产物：accepted spec 与 approved plan 一旦落地立即 commit，先于实现开始；创建前先查重文件名（本地、远端、其他 session 分支），撞名加区分后缀，避免并行 session 撞名或重复编辑。规则同样见 Commit and Merge Autonomy（section 3.2）。

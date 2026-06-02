@@ -6,6 +6,8 @@ Filename pattern:
 YYYY-MM-DD-<short-feature-name>.md
 ```
 
+Before creating the file, confirm the name is not already taken (locally, on the remote, and on other session branches); add a disambiguating suffix on collision. Commit the spec immediately once it lands and is accepted (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2).
+
 ## 1. Title
 
 ## 2. User Goal

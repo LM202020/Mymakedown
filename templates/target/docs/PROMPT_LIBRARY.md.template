@@ -188,11 +188,12 @@
 要求：
 
 1. 使用 docs/specs/SPEC_TEMPLATE.md 的结构。
-2. 明确 goal、non-goals、requirements、acceptance criteria。
-3. 标出 data/security/deployment/rollback 影响。
-4. 不确定的地方列为 Open Questions。
-5. 不要开始写 implementation plan。
-6. 不要写代码。
+2. 创建文件前先查重文件名（本地、远端、其他 session 分支）；日期前缀同名时加区分后缀。
+3. 明确 goal、non-goals、requirements、acceptance criteria。
+4. 标出 data/security/deployment/rollback 影响。
+5. 不确定的地方列为 Open Questions。
+6. 不要开始写 implementation plan。
+7. 不要写代码。
 ```
 
 ## C2. 评审 Spec
@@ -235,7 +236,8 @@
 2. 写清楚 accepted constraints。
 3. 写清楚 out-of-scope。
 4. 写清楚之后 implementation plan 只能基于这个版本。
-5. 不要开始写代码。
+5. Accepted 后立即 commit 该 spec 文件（见 docs/IMPLEMENTATION_WORKFLOW.md §3.2）。
+6. 不要开始写代码。
 ```
 
 ---
@@ -250,15 +252,17 @@
 要求：
 
 1. 使用 docs/plans/IMPLEMENTATION_PLAN_TEMPLATE.md 的结构。
-2. 每个 requirement 必须映射到 task、verification、deferred 或 out-of-scope。
-3. 写清楚 File Ownership Map。
-4. 写清楚 Task Dependency Graph。
-5. 写清楚哪些 task 可以 parallel-safe，哪些必须 serial。
-6. 写清楚 focused verification command。
-7. 写清楚 Risk Gates。
-8. 写清楚 Handoff Plan。
-9. 不允许 TODO、TBD、implement the obvious logic、make sure it works 这类占位。
-10. 不要开始写代码。
+2. 创建文件前先查重文件名（本地、远端、其他 session 分支）；日期前缀同名时加区分后缀。
+3. 每个 requirement 必须映射到 task、verification、deferred 或 out-of-scope。
+4. 写清楚 File Ownership Map。
+5. 写清楚 Task Dependency Graph。
+6. 写清楚哪些 task 可以 parallel-safe，哪些必须 serial。
+7. 写清楚 focused verification command。
+8. 写清楚 Risk Gates。
+9. 写清楚 Handoff Plan。
+10. 不允许 TODO、TBD、implement the obvious logic、make sure it works 这类占位。
+11. plan 批准后立即 commit（见 docs/IMPLEMENTATION_WORKFLOW.md §3.2）。
+12. 不要开始写代码。
 ```
 
 ## D2. 评审 Implementation Plan
@@ -1122,6 +1126,7 @@
 4. Lead Agent 汇总后统一更新 docs/SESSION_HANDOFF.md。
 5. Lead Agent 更新 docs/HANDOFF_INDEX.md。
 6. 不要让多个 Agent 同时追加 SESSION_HANDOFF。
+7. spec/plan 一落地立即 commit，创建前先查重文件名，避免并行 session 撞名或重复编辑（见 IMPLEMENTATION_WORKFLOW §3.2）。
 ```
 
 

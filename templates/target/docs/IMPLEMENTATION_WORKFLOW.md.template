@@ -102,7 +102,8 @@ the Light Lane for small changes and the Full Lane for large or risky ones; both
 For a small, low-risk change, usually one session and a few files. Keep these gates, drop the rest:
 
 1. Write a short combined note instead of separate spec + plan: goal, approach, files to touch,
-   files not to touch, and the verification command. Inline, or a brief file under `docs/plans/`.
+   files not to touch, and the verification command. Inline, or a brief file under `docs/plans/`;
+   if a file, commit it promptly per section 3.2.
 2. Skip the separate Spec Review and Plan Review gates; do one self-check that the note is concrete
    (no unresolved `UNKNOWN`, no vague steps).
 3. Branch as usual; a dedicated worktree is optional.
@@ -134,11 +135,19 @@ non-overlapping file-ownership map (sections 11 and 14), so parallel commits nev
 
 Rules:
 
-1. Commit freely on your own session branch/worktree after the lane's self-review step (Light Lane
+1. Commit planning artifacts the moment they land. As soon as an accepted spec or an approved plan
+   is written under `docs/specs/` or `docs/plans/`, commit it immediately — before starting
+   implementation — and never leave planning documents uncommitted across tasks. Before creating a
+   spec or plan file, check whether the name is already taken (locally, on the remote, and on other
+   session branches); the date-prefixed pattern (`YYYY-MM-DD-<feature>…`) collides easily when
+   sessions run in parallel on the same day, so add a disambiguating suffix when it is. Committing
+   early is what lets parallel sessions see each other's specs and plans instead of silently picking
+   the same filename or editing the same document.
+2. Commit freely on your own session branch/worktree after the lane's self-review step (Light Lane
    step 7, or the per-task review gate in the Full Lane). No separate approval is needed to commit.
-2. Do not bypass a failing required check or a `block`-mode hook to force a commit. Fix the finding
+3. Do not bypass a failing required check or a `block`-mode hook to force a commit. Fix the finding
    first; auto-commit assumes the required checks pass.
-3. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
+4. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
    independent adversarial review must pass. This is a Review Agent Protocol pass (section 20) run
    by a different agent or model than the implementer — a cross-model / Codex review whose explicit
    job is to find blockers, not to approve. Merge only if it reports no `blocker` and no `must fix`
@@ -325,6 +334,8 @@ Before writing an implementation plan, review the spec and decide one of:
 - **Accepted with explicit constraints**: implementation may proceed only under named assumptions.
 - **Rejected / needs revision**: return to spec review; do not guess in implementation.
 
+When the spec is accepted, commit it immediately, before planning, per the Commit and Merge Autonomy policy (section 3.2).
+
 Spec review must check:
 
 - user goal and non-goals are explicit
@@ -392,6 +403,8 @@ The plan is approved only if:
 - handoff impact is clear if multiple agents will be used
 
 Do not create the implementation branch until the plan is approved.
+
+Once the plan is approved, commit it immediately, before cutting the branch, per the Commit and Merge Autonomy policy (section 3.2).
 
 ---
 

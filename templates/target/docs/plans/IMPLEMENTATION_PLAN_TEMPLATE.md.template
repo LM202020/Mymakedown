@@ -6,6 +6,8 @@ Filename pattern:
 YYYY-MM-DD-<short-feature-name>-plan.md
 ```
 
+Before creating the file, confirm the name is not already taken (locally, on the remote, and on other session branches); add a disambiguating suffix on collision. Commit the plan immediately once it is approved (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2).
+
 ## 1. Goal
 
 ## 2. Source Map
