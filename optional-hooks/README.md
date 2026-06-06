@@ -25,6 +25,10 @@
 optional-hooks/config/hooks-config.yaml
 ```
 
+支持行内注释：在 `key: value` 或列表项后面写 ` # 说明` 会被解析器忽略，例如
+`adoption_manifest: false   # 暂时关闭`。注释必须以空格 + `#` 开头；引号内的 `#`
+（如 secret 正则）不会被当成注释。
+
 ## 安装
 
 ```bash
