@@ -10,8 +10,10 @@ Hooks 用来自动检查 Agent 常犯的明显错误：
 
 - 把 secrets 或 `.env` 提交进去
 - 让 `SESSION_HANDOFF.md` 不断膨胀
+- 让 `HANDOFF_INDEX.md` 超过 `HANDOFF_POLICY.md` 定义的行数上限
 - 直接覆盖老项目已有文件
 - 在 spec / plan 里留下 TODO、TBD、模糊占位
+- spec / plan / review / retro 新文件漏掉本 session 的 slug（按构造唯一防撞号）
 - 修改 owned files 之外的文件
 - 缺少 adoption manifest
 
@@ -72,8 +74,10 @@ python3 optional-hooks/scripts/run_all_checks.py
 ```bash
 python3 optional-hooks/scripts/check_secrets.py
 python3 optional-hooks/scripts/check_handoff_size.py
+python3 optional-hooks/scripts/check_handoff_index.py
 python3 optional-hooks/scripts/check_no_overwrite.py
 python3 optional-hooks/scripts/check_plan_placeholders.py
+python3 optional-hooks/scripts/check_planning_names.py
 python3 optional-hooks/scripts/check_adoption_manifest.py
 python3 optional-hooks/scripts/check_owned_files.py
 ```

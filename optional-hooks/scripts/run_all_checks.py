@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import subprocess, sys
 from pathlib import Path
-scripts=['check_secrets.py','check_handoff_size.py','check_no_overwrite.py','check_plan_placeholders.py','check_adoption_manifest.py','check_owned_files.py']
+scripts=['check_secrets.py','check_handoff_size.py','check_handoff_index.py','check_no_overwrite.py','check_plan_placeholders.py','check_planning_names.py','check_adoption_manifest.py','check_owned_files.py']
 failed=0
 for s in scripts:
     p=Path('optional-hooks/scripts')/s

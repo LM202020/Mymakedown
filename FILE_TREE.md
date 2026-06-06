@@ -23,8 +23,10 @@ project_agent_workflow_framework_v8/
 │       ├── run_all_checks.py
 │       ├── check_secrets.py
 │       ├── check_handoff_size.py
+│       ├── check_handoff_index.py
 │       ├── check_no_overwrite.py
 │       ├── check_plan_placeholders.py
+│       ├── check_planning_names.py
 │       ├── check_owned_files.py
 │       └── check_adoption_manifest.py
 └── templates/

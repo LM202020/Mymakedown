@@ -3,8 +3,10 @@ mode: warn
 checks:
   secrets: true
   handoff_size: true
+  handoff_index: true
   no_overwrite: true
   plan_placeholders: true
+  planning_names: true
   owned_files: false
   adoption_manifest: true
 

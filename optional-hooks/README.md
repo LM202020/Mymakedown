@@ -8,8 +8,10 @@
 
 - secrets / `.env` 是否被提交
 - `SESSION_HANDOFF.md` 是否膨胀
+- `HANDOFF_INDEX.md` 行数是否超过 `HANDOFF_POLICY.md` 定义的上限
 - 是否直接覆盖老项目已有文件
 - spec / plan 是否含 TODO、TBD、模糊占位
+- spec / plan / review / retro 新文件名是否带上本 session 的 slug（按构造唯一，防并行撞号）
 - 是否修改 owned files 之外的文件
 - adoption manifest 是否存在且基本有效
 
@@ -45,7 +47,9 @@ python3 optional-hooks/scripts/run_all_checks.py
 
 1. secrets 检查
 2. handoff size 检查
-3. no-overwrite 检查
-4. plan placeholder 检查
-5. adoption manifest 检查
-6. owned files 检查
+3. handoff index 检查
+4. no-overwrite 检查
+5. plan placeholder 检查
+6. planning names 检查
+7. adoption manifest 检查
+8. owned files 检查
