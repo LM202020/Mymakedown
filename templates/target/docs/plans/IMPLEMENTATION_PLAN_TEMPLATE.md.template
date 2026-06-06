@@ -3,10 +3,10 @@
 Filename pattern:
 
 ```text
-YYYY-MM-DD-<short-feature-name>-plan.md
+YYYY-MM-DD-<short-feature-name>-<session-slug>-plan.md
 ```
 
-Before creating the file, confirm the name is not already taken (locally, on the remote, and on other session branches); add a disambiguating suffix on collision. Commit the plan immediately once it is approved (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2).
+`<session-slug>` is your session's branch or worktree name (e.g. `charming-hoover-c0a3c9`); appending it makes the filename unique by construction, so no name check is needed even when sessions run in parallel on the same day (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2). Commit the plan immediately once it is approved.
 
 ## 1. Goal
 

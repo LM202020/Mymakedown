@@ -3,8 +3,10 @@
 Filename pattern:
 
 ```text
-YYYY-MM-DD-<task-or-feature>-review.md
+YYYY-MM-DD-<task-or-feature>-<session-slug>-review.md
 ```
+
+`<session-slug>` is your session's branch/worktree name (e.g. `charming-hoover-c0a3c9`) — appending it keeps the filename unique under parallel sessions (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2).
 
 ## 1. Review Scope
 

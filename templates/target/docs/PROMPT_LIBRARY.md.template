@@ -188,7 +188,7 @@
 要求：
 
 1. 使用 docs/specs/SPEC_TEMPLATE.md 的结构。
-2. 创建文件前先查重文件名（本地、远端、其他 session 分支）；日期前缀同名时加区分后缀。
+2. 文件名在日期前缀后追加本 session 的分支/worktree slug（如 `charming-hoover-c0a3c9`），按构造唯一，无需跨分支查重（见 §3.2）。
 3. 明确 goal、non-goals、requirements、acceptance criteria。
 4. 标出 data/security/deployment/rollback 影响。
 5. 不确定的地方列为 Open Questions。
@@ -252,7 +252,7 @@
 要求：
 
 1. 使用 docs/plans/IMPLEMENTATION_PLAN_TEMPLATE.md 的结构。
-2. 创建文件前先查重文件名（本地、远端、其他 session 分支）；日期前缀同名时加区分后缀。
+2. 文件名在日期前缀后追加本 session 的分支/worktree slug（如 `charming-hoover-c0a3c9`），按构造唯一，无需跨分支查重（见 §3.2）。
 3. 每个 requirement 必须映射到 task、verification、deferred 或 out-of-scope。
 4. 写清楚 File Ownership Map。
 5. 写清楚 Task Dependency Graph。
@@ -1127,7 +1127,7 @@
 4. Lead Agent 汇总后统一更新 docs/SESSION_HANDOFF.md。
 5. Lead Agent 更新 docs/HANDOFF_INDEX.md。
 6. 不要让多个 Agent 同时追加 SESSION_HANDOFF。
-7. spec/plan 一落地立即 commit，创建前先查重文件名，避免并行 session 撞名或重复编辑（见 IMPLEMENTATION_WORKFLOW §3.2）。
+7. spec/plan 一落地立即 commit，文件名追加本 session 的分支/worktree slug 以按构造唯一，避免并行撞名（见 IMPLEMENTATION_WORKFLOW §3.2）。
 ```
 
 

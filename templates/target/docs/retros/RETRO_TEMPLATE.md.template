@@ -3,8 +3,10 @@
 Filename pattern:
 
 ```text
-YYYY-MM-DD-<feature-or-change>-retro.md
+YYYY-MM-DD-<feature-or-change>-<session-slug>-retro.md
 ```
+
+`<session-slug>` is your session's branch/worktree name (e.g. `charming-hoover-c0a3c9`) — appending it keeps the filename unique under parallel sessions (see `docs/IMPLEMENTATION_WORKFLOW.md` §3.2).
 
 ## 1. Summary
 
