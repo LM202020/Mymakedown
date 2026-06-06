@@ -46,7 +46,7 @@
 明确 goal、non-goals、requirements、acceptance criteria。
 标出 data/security/deployment/rollback 影响。
 不确定的地方列为 Open Questions。
-创建文件前先查重文件名；spec Accepted 后立即 commit。
+文件名追加本 session 分支/worktree slug 以按构造唯一；spec Accepted 后立即 commit。
 不要写 implementation plan，不要写代码。
 ```
 
@@ -60,7 +60,7 @@
 每个 requirement 必须映射到 task、verification、deferred 或 out-of-scope。
 写清楚 File Ownership Map、Task Dependency Graph、Verification Plan、Risk Gates、Handoff Plan。
 不允许 TODO、TBD、make sure it works。
-创建文件前先查重文件名；plan 批准后立即 commit。
+文件名追加本 session 分支/worktree slug 以按构造唯一；plan 批准后立即 commit。
 不要开始写代码。
 ```
 

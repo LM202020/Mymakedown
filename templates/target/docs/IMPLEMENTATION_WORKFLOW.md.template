@@ -138,12 +138,14 @@ Rules:
 
 1. Commit planning artifacts the moment they land. As soon as an accepted spec or an approved plan
    is written under `docs/specs/` or `docs/plans/`, commit it immediately — before starting
-   implementation — and never leave planning documents uncommitted across tasks. Before creating a
-   spec or plan file, check whether the name is already taken (locally, on the remote, and on other
-   session branches); the date-prefixed pattern (`YYYY-MM-DD-<feature>…`) collides easily when
-   sessions run in parallel on the same day, so add a disambiguating suffix when it is. Committing
-   early is what lets parallel sessions see each other's specs and plans instead of silently picking
-   the same filename or editing the same document.
+   implementation — and never leave planning documents uncommitted across tasks. Name spec, plan,
+   review, and retro files so they are unique by construction: append your session's branch or
+   worktree slug to the date-prefixed name (`YYYY-MM-DD-<feature>-<session-slug>…`, where
+   `<session-slug>` is the branch/worktree name such as `charming-hoover-c0a3c9`). Because every
+   session owns a distinct branch/worktree (sections 11 and 14), the slug alone makes the filename
+   unique — no cross-branch name check is needed, and parallel sessions never pick the same name
+   even on the same day. Two sessions on the same feature get two differently-named documents by
+   design; that is correct for independent sessions, not a collision to resolve.
 2. Commit freely on your own session branch/worktree after the lane's self-review step (Light Lane
    step 7, or the per-task review gate in the Full Lane). No separate approval is needed to commit.
 3. Commit and push whenever work completes or you summarize. Each time a unit of work is finished,
