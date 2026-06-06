@@ -4,8 +4,19 @@ import subprocess, re
 from pathlib import Path
 ROOT=Path.cwd()
 CONFIG_PATH=ROOT/'optional-hooks/config/hooks-config.yaml'
+def strip_inline_comment(v):
+    # Drop a YAML-style inline comment: the first ' #' that is preceded by
+    # whitespace and sits outside any quotes. Leaves '#' inside quoted values
+    # (e.g. regex patterns) and '#' without a leading space untouched.
+    in_single=in_double=False; prev_ws=False
+    for i,ch in enumerate(v):
+        if ch=='"' and not in_single: in_double=not in_double
+        elif ch=="'" and not in_double: in_single=not in_single
+        elif ch=='#' and not in_single and not in_double and prev_ws: return v[:i]
+        prev_ws=ch in ' \t'
+    return v
 def parse_scalar(v):
-    v=v.strip().strip('"').strip("'")
+    v=strip_inline_comment(v).strip().strip('"').strip("'")
     if v in ('true','True'): return True
     if v in ('false','False'): return False
     try: return int(v)
@@ -23,7 +34,7 @@ def load_config():
             k,v=s.split(':',1); cfg[k.strip()]=parse_scalar(v); cur=None; continue
         if cur and s.startswith('- '):
             if not isinstance(cfg.get(cur),list): cfg[cur]=[]
-            cfg[cur].append(s[2:].strip().strip('"').strip("'")); continue
+            cfg[cur].append(strip_inline_comment(s[2:]).strip().strip('"').strip("'")); continue
         if cur and ':' in s:
             if not isinstance(cfg.get(cur),dict): cfg[cur]={}
             k,v=s.split(':',1); cfg[cur][k.strip()]=parse_scalar(v)
