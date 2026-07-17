@@ -53,23 +53,3 @@ Use this file to decide how to apply the framework.
 5. 输出哪些文件需要人工确认。
 6. 不要修改任何文件。
 ```
-
----
-
-## 4. Optional Hooks Installation
-
-框架安装或老项目接管完成后，可以选择启用 hooks。
-
-```text
-请为这个项目启用 optional hooks。
-
-要求：
-
-1. 先读取 HOOKS_USAGE.md。
-2. 先读取 optional-hooks/config/hooks-config.yaml。
-3. 不要直接改业务代码。
-4. 安装 hooks 前先确认当前项目是 git repo。
-5. 运行 bash optional-hooks/install-hooks.sh。
-6. 安装后运行 python3 optional-hooks/scripts/run_all_checks.py。
-7. 如果有 warning，只汇报，不要擅自大改。
-```

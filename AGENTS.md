@@ -16,7 +16,6 @@ Claude-specific notes: `CLAUDE.md`. Codex-specific notes: `CODEX.md`.
 | `SAFE_ADOPTION_POLICY.md`, `INSTALL_OR_ADOPT_WORKFLOW.md` | how it gets applied to a project |
 | `templates/FILE_ADOPTION_MANIFEST.md` | the rule table: every target file + its `adoption_mode` |
 | `templates/target/` | the actual content that lands in a target project (everything is a template) |
-| `optional-hooks/` | the opt-in pre-commit/pre-push layer for *target* projects |
 | `scripts/check_framework_consistency.py` | integrity guard for *this* repo |
 
 ## Rules for editing this framework
@@ -28,14 +27,12 @@ Claude-specific notes: `CLAUDE.md`. Codex-specific notes: `CODEX.md`.
 3. **Always keep the `target/` segment in template paths** (`templates/target/root/...`); never
    drop it to the legacy un-prefixed form.
 4. **Handoff size limits have one source.** The numbers (currently 300/250/200 lines) live only in
-   `templates/target/docs/HANDOFF_POLICY.md.template` (human source) and
-   `optional-hooks/config/hooks-config.yaml` (machine-enforced). Everywhere else references the
+   `templates/target/docs/HANDOFF_POLICY.md.template`. Everywhere else references the
    policy — do not restate the numbers.
 5. **Version strings.** The framework version (currently `v8`) appears in root doc titles and in
    `scripts/check_framework_consistency.py` (`EXPECTED_VERSION`). Bump them together.
-6. **Cross-platform.** Shell scripts and git hooks must stay LF (`.gitattributes` enforces this).
-   Python is invoked as `python3` with a fallback to `python`; keep scripts pure-Python and
-   dependency-free.
+6. **Cross-platform.** Python is invoked as `python3` with a fallback to `python`; keep scripts
+   pure-Python and dependency-free.
 7. **Preserve the core conventions.** The `UNKNOWN`/`N/A` fill markers, file-ownership maps,
    no-placeholder gates, size limits, and the Agent Output Contract are the most valuable part of
    the templates. Do not water them down.

@@ -111,24 +111,3 @@ managed content
 8. 生成 adoption summary。
 9. 不要修改业务代码。
 ```
-
----
-
-## 8. Optional Hooks 和 Safe Adoption
-
-v7 的 optional hooks 可以辅助检查 Safe Adoption 是否被破坏。
-
-推荐开启：
-
-```text
-check_no_overwrite.py
-check_adoption_manifest.py
-```
-
-它们会检查：
-
-1. 是否修改了受保护入口文件。
-2. 是否缺少 adoption manifest。
-3. 是否可能绕过 adoption_mode 直接覆盖文件。
-
-注意：hooks 只能辅助检查，不能替代人工 review。

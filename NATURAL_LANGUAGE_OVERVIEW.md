@@ -252,30 +252,3 @@ Codex 执行前确认 owned files。
 Claude review 不扩大 scope。
 高风险文件必须显式批准。
 ```
-
----
-
-## 9. v7 的 Optional Hooks 是什么
-
-v7 增加了一个可选的 hooks 层。
-
-你可以理解成：
-
-```text
-文档规则是交通规则。
-Hooks 是路口的警示灯和栏杆。
-```
-
-v6 已经告诉 Agent：
-
-- 不要覆盖老项目文件
-- 不要让 SESSION_HANDOFF 膨胀
-- 不要提交 secrets
-- 不要改 owned files 之外的文件
-- plan 不要留 TODO / TBD
-
-v7 的 hooks 会在 commit / push 前帮你检查这些问题。
-
-但它默认不启用，因为不同项目环境不一样。
-
-建议先用 `warn` 模式，稳定后再切换到 `block` 模式。

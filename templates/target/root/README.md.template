@@ -91,12 +91,6 @@ v6 把所有目标文件统一改成模板模式，全部放在 `templates/targe
 每个文件按 `templates/FILE_ADOPTION_MANIFEST.md` 里的 `adoption_mode` 处理，确保老项目的 `README.md`、`docs/ARCHITECTURE.md`、`docs/DEPLOYMENT.md` 等都不会被覆盖。
 
 
-## v7 新增
-
-v7 增加了可选的 `optional-hooks/` 层，在 commit / push 前自动检查 secrets、handoff 膨胀、文件覆盖、plan/spec 占位符、owned files、adoption manifest。
-
-默认不启用，建议先用 `warn` 模式，稳定后再切到 `block`。
-
 ## v8 新增
 
 v8 补全了多 Session 并行下的提交 / 合并规则（见 `docs/IMPLEMENTATION_WORKFLOW.md` 的 Commit and Merge Autonomy）：每个 Session 在自己分支 / worktree 上自动 commit 与 push，合并进 base 前必须先过一轮独立对抗式评审；spec / plan 一落地就 commit，文件名追加 session 的分支/worktree slug 按构造唯一，避免并行撞名或重复编辑；工作完成或写小结后自动 commit + push。
