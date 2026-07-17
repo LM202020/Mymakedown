@@ -15,7 +15,7 @@
 | 文件 | 职责 | 是否允许无限增长 |
 |---|---|---|
 | `docs/SESSION_HANDOFF.md` | 当前恢复入口，只保留最新状态 | 不允许 |
-| `docs/HANDOFF_INDEX.md` | 历史交接索引，只保留一行摘要 | 有上限，按月归档 |
+| `docs/HANDOFF_INDEX.md` | 历史交接索引，只保留一行摘要 | 有上限，按 7 天归档 |
 | `docs/handoffs/*.md` | 单次交接快照 | 每个文件有长度上限 |
 | `docs/plans/*.md` | active plan 和 task status | 不记录聊天历史 |
 | `docs/DECISIONS.md` | 长期决策 | 可增长，但要结构化 |
@@ -31,10 +31,10 @@
 |---|---:|---:|---|
 | `docs/SESSION_HANDOFF.md` | 100 - 200 行 | 300 行 | 执行 Handoff Compaction |
 | `docs/handoffs/*.md` | 80 - 150 行 | 250 行 | 摘要化并把大内容外置 |
-| `docs/HANDOFF_INDEX.md` | 最近记录 | 200 行 | 按月归档到 `docs/handoffs/archive/` |
+| `docs/HANDOFF_INDEX.md` | 最近记录 | 200 行 | 按 7 天归档到 `docs/handoffs/archive/` |
 | `Commands Run` 表 | 最近关键命令 | 10 行 | 旧命令移出或只留摘要 |
 
-> 本表是这些大小限制的**唯一来源**。机器侧由 `optional-hooks/config/hooks-config.yaml` 的 `limits` 强制执行；改动本表时必须同步更新该配置。其他文档不要复述这些数字，引用本节即可。
+> 本表是这些大小限制的**唯一来源**。其他文档不要复述这些数字，引用本节即可。
 
 ---
 
@@ -93,10 +93,10 @@ docs/handoffs/artifacts/
 | 2026-05-20 14:30 | Claude -> Codex | implementation | TASK-02 | docs/handoffs/2026-05-20-1430-claude-to-codex-task-02.md | done |
 ```
 
-当索引超过 200 行时，按月归档到：
+当索引超过 200 行时，按 7 天为一档归档到：
 
 ```text
-docs/handoffs/archive/YYYY-MM-HANDOFF_INDEX.md
+docs/handoffs/archive/YYYY-MM-DD-HANDOFF_INDEX.md
 ```
 
 ---

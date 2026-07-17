@@ -9,7 +9,7 @@ editing templates or the manifest:
 Checks (FAIL = exit non-zero, WARN = informational):
   1. Every Template Path in the manifest exists on disk.
   2. No stale `templates/root/` references (must be `templates/target/root/`).
-  3. Handoff size numbers live only in HANDOFF_POLICY and hooks-config.yaml.
+  3. Handoff size numbers live only in HANDOFF_POLICY.
   4. Root entry/title docs declare the expected framework version.
   5. (WARN) Template files not referenced by the manifest.
 """

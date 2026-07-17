@@ -448,7 +448,7 @@ docs/handoffs/archive/
 
 ### 12.1 硬性限制
 
-交接文件的目标/最大长度和超限动作统一定义在 `docs/HANDOFF_POLICY.md` §2，机器侧由 `optional-hooks/config/hooks-config.yaml` 强制执行。以那里为准，此处不再复述数字。
+交接文件的目标/最大长度和超限动作统一定义在 `docs/HANDOFF_POLICY.md` §2。以那里为准，此处不再复述数字。
 
 ### 12.2 保存 Session 时的推荐说法
 

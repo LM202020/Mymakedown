@@ -34,12 +34,10 @@ project_agent_workflow_framework_v8/
 ├── SAFE_ADOPTION_POLICY.md       # 全文件安全采用策略
 ├── INSTALL_OR_ADOPT_WORKFLOW.md  # 安装 / 接管 / dry-run 指令
 ├── FRAMEWORK_QUICK_PROMPTS.md    # 常用 Prompt 速查
-├── HOOKS_USAGE.md                # Optional Hooks 使用说明
 ├── FILE_TREE.md
-├── templates/
-│   ├── FILE_ADOPTION_MANIFEST.md # 每个目标文件如何落地的规则表
-│   └── target/                   # 所有待落地的模板内容
-└── optional-hooks/               # v7 可选 Hook 层（默认不启用）
+└── templates/
+    ├── FILE_ADOPTION_MANIFEST.md # 每个目标文件如何落地的规则表
+    └── target/                   # 所有待落地的模板内容
 ```
 
 ## 怎么用
@@ -64,35 +62,9 @@ Session 不会自动保存。旧窗口结束前说「请执行 Session Save Hand
 
 交给 Codex 前必须保存 handoff；Codex 接手前必须 restore；改完输出 Agent Output Contract；Claude review 不扩大 scope。
 
-## v7 新增：Optional Hooks
-
-v7 在文档规则之外增加了一个可选 Hook 层（路口的警示灯和栏杆）。它在 commit / push 前自动检查：
-
-- secrets / `.env`
-- handoff 文件是否膨胀
-- 是否直接覆盖老项目已有文件
-- plan / spec 是否留有 TODO、TBD、模糊占位
-- 是否修改 owned files 之外的文件
-- adoption manifest 是否存在且基本有效
-
-默认**不启用**。安装与卸载：
-
-```bash
-bash optional-hooks/install-hooks.sh
-bash optional-hooks/uninstall-hooks.sh
-```
-
-手动检查：
-
-```bash
-python3 optional-hooks/scripts/run_all_checks.py   # Windows 上若无 python3，用 python
-```
-
-建议先用 `warn` 模式，稳定后再改成 `block`。详见 [`HOOKS_USAGE.md`](HOOKS_USAGE.md)。
-
 ## v8 新增：并行 Session 的提交协调
 
-v8 在 Hook 层之外补全了多 Session 并行时的提交 / 合并规则（落地项目里的 `docs/IMPLEMENTATION_WORKFLOW.md` §3.2 Commit and Merge Autonomy）：
+v8 补全了多 Session 并行时的提交 / 合并规则（落地项目里的 `docs/IMPLEMENTATION_WORKFLOW.md` §3.2 Commit and Merge Autonomy）：
 
 - 每个 Session 在自己分支 / worktree 上自动 commit 与 push，无需逐次人工确认；合并进 base 前必须先过一轮独立对抗式评审，P3 高风险变更仍需显式人工批准。
 - spec / plan 一落地就 commit，创建前查重文件名、撞名加后缀，避免并行 Session 撞名或重复编辑。

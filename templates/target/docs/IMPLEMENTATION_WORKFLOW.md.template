@@ -153,8 +153,8 @@ Rules:
    work and push the current branch to its remote — no separate approval is needed. Keeping the
    remote current is how parallel sessions and reviewers see your progress without waiting for a
    merge. Pushing your own session branch is not merging: the merge gate below still applies.
-4. Do not bypass a failing required check or a `block`-mode hook to force a commit or push. Fix the
-   finding first; auto-commit and auto-push assume the required checks and pre-push hooks pass.
+4. Do not bypass a failing required check to force a commit or push. Fix the
+   finding first; auto-commit and auto-push assume the required checks pass.
 5. Auto-merge precondition: before a P1 or P2 session branch is merged into the base, one
    independent adversarial review must pass. This is a Review Agent Protocol pass (section 20) run
    by a different agent or model than the implementer — a cross-model / Codex review whose explicit
@@ -757,6 +757,6 @@ Trivial surgical fixes may use a shorter path only when they do not affect archi
 
 ## Handoff Size Control and Compaction
 
-Handoff files must not grow without bound. The size limits, the content that must be externalized, and the compaction triggers are defined once in `docs/HANDOFF_POLICY.md` (enforced by `optional-hooks/config/hooks-config.yaml`).
+Handoff files must not grow without bound. The size limits, the content that must be externalized, and the compaction triggers are defined once in `docs/HANDOFF_POLICY.md`.
 
 Run Handoff Compaction whenever `docs/HANDOFF_POLICY.md` requires it. Do not restate the limits here.
